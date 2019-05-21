@@ -3,33 +3,35 @@
 # But the old state is still there, this is wiped out.
 # https://www.youtube.com/watch?v=4_9twnEduFA
 
-import sys, pygame
+import os
+import pygame
 import random
-import time
-from datetime import datetime
+import sys
 
-#To do add dostrings.
-#Package as pip package
-# TODO add keybinds
-# GUI.
-# TODO take all of these as constructor arguments.
+#CHange into CAPS if they are constant variables.
 grid_size = width, height = 400, 400
 cell_size = 10
 color_dead = 0, 0, 0  # Background
 color_alive = 255, 0, 0  # alive cell, can be any color.  #orange = 255, 100, 0 #yellow = 255,255,0, # red=255,0,0 #Green 0,200,0
-#fps_max = 10
+fps_max = 10
+
 
 class GameOfLife:
 
     def __init__(self):
 
-        #The screen
+      #The screen
+
         pygame.init()
+
+        pygame.display.set_caption("Game of Life - Created by Fabio Melis") #Gives a title to the window
+
+        self.FPSCLOCK = pygame.time.Clock()
         self.screen = pygame.display.set_mode(grid_size)
         self.clear_screen()  # you clear the screen before it starts running
 
 
-        pygame.display.flip()
+        pygame.display.flip() #Update the full display Surface to the screen
         self.last_update_completed = 0
         #self.desired_milliseconds_between_updates = (1.0 / fps_max) * 1000
         self.active_grid = 0
@@ -40,9 +42,6 @@ class GameOfLife:
         self.set_grid()
         self.paused = False
         self.game_over = False
-
-
-
 
     def init_grids(self):
 
@@ -84,12 +83,15 @@ class GameOfLife:
                     color = color_alive
                 else:
                     color = color_dead
+
+                #pygame.draw.rect(self.screen, color, ((c * cell_size + (cell_size / 2)),(r * cell_size + (cell_size / 2)), cell_size, cell_size) )
                 pygame.draw.circle(self.screen,
-                                color,
-                                (int(c * cell_size + (cell_size/2)),
-                                int(r * cell_size + (cell_size/2))),
-                                int(cell_size/2), 0)
+                                  color,
+                                   (int(c * cell_size + (cell_size / 2)),
+                                   int(r * cell_size + (cell_size / 2))),
+                               int(cell_size / 2), 0)
         pygame.display.flip()
+
 
     def clear_screen(self):
         self.screen.fill(color_dead)
@@ -160,8 +162,29 @@ class GameOfLife:
     def inactive_grid(self):
         return (self.active_grid + 1) % 2
 
+
+
     def handle_events(self):
         for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                #Get the position of the mouseclick
+                mousepos_x, mousepos_y = event.pos
+                print(mousepos_x, mousepos_y)
+
+
+                """"
+                for row in range(self.num_rows):
+                    for col in range(self.num_cols):
+                        click = pygame.mouse.get_pos()
+                        if self.get_cell == color_alive:
+                            return color_dead
+
+                        else:
+                            return color_dead
+
+            #cell_value.is_in_range(click[0], click[1]):
+"""
+
             if event.type == pygame.KEYDOWN:
                 if event.unicode == 's':
                     if self.paused:
@@ -204,20 +227,9 @@ class GameOfLife:
                 continue
             self.update_generation()  # Upgrade the generation
             self.draw_grid()  # and draw the grid
-            #time.sleep(1)
-            #self.cap_frame_rate()
+            self.FPSCLOCK.tick(fps_max)
 
-"""" 
-    def cap_frame_rate(self):
-        now = pygame.time.get_ticks() #0 may also work.
-        milliseconds_since_last_update = now - self.last_update_completed
-        time_to_sleep = self.desired_milliseconds_between_updates - milliseconds_since_last_update
-        print(time_to_sleep)
-        if time_to_sleep > 1:  #Or True
-            pygame.time.delay(int(time_to_sleep))
-            self.last_update_completed = now
 
-"""
 
 
 
