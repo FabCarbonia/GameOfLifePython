@@ -8,29 +8,23 @@ import pygame
 import random
 import sys
 
+
 #CHange into CAPS if they are constant variables.
 grid_size = width, height = 400, 400
 cell_size = 10
 color_dead = 0, 0, 0  # Background
-color_alive = 255, 0, 0  # alive cell, can be any color.  #orange = 255, 100, 0 #yellow = 255,255,0, # red=255,0,0 #Green 0,200,0
+color_alive = 255, 255, 255  # alive cell, can be any color.  #orange = 255, 100, 0 #yellow = 255,255,0, # red=255,0,0 #Green 0,200,0
 fps_max = 10
 
 
 class GameOfLife:
-
     def __init__(self):
-
       #The screen
-
         pygame.init()
-
         pygame.display.set_caption("Game of Life - Created by Fabio Melis") #Gives a title to the window
-
         self.FPSCLOCK = pygame.time.Clock()
         self.screen = pygame.display.set_mode(grid_size)
         self.clear_screen()  # you clear the screen before it starts running
-
-
         pygame.display.flip() #Update the full display Surface to the screen
         self.last_update_completed = 0
         #self.desired_milliseconds_between_updates = (1.0 / fps_max) * 1000
@@ -42,6 +36,12 @@ class GameOfLife:
         self.set_grid()
         self.paused = False
         self.game_over = False
+
+    def is_in_range(self, x, y):
+        if x in range(self.x, self.x + self.size + 1) and y in range(self.y, self.y + self.size + 1):
+            return True
+        else:
+            return False
 
     def init_grids(self):
 
@@ -85,13 +85,10 @@ class GameOfLife:
                     color = color_dead
 
                 #pygame.draw.rect(self.screen, color, ((c * cell_size + (cell_size / 2)),(r * cell_size + (cell_size / 2)), cell_size, cell_size) )
-                pygame.draw.circle(self.screen,
-                                  color,
-                                   (int(c * cell_size + (cell_size / 2)),
-                                   int(r * cell_size + (cell_size / 2))),
-                               int(cell_size / 2), 0)
+                posn = (int(c * cell_size + cell_size / 2),
+                        int(r * cell_size + cell_size / 2))
+                pygame.draw.circle(self.screen, color, posn, int(cell_size / 2), 0)
         pygame.display.flip()
-
 
     def clear_screen(self):
         self.screen.fill(color_dead)
@@ -105,7 +102,6 @@ class GameOfLife:
         return cell_value
 
     def check_cell_neighbors(self, row_index, col_index):
-
         # Get the number of alive cells surrounding the current cell
         # self.grids[self.active_grid][r][c]   #is the current cell
         num_alive_neighbors = 0
@@ -149,8 +145,8 @@ class GameOfLife:
         for r in range(self.num_rows - 1):
             for c in range(self.num_cols - 1):
                 next_gen_state = self.check_cell_neighbors(r, c)
-                #Set inactive grid future cell state
-                self.grids[self.inactive_grid()][r][c]  = next_gen_state #if it is zero, than is is 1. if it is 1, it is gonna be 0. Picks the offgrid.
+                # Set inactive grid future cell state
+                self.grids[self.inactive_grid()][r][c] = next_gen_state  # if it is zero, than is is 1. if it is 1, it is gonna be 0. Picks the offgrid.
         self.active_grid = self.inactive_grid()
 
 
@@ -162,28 +158,36 @@ class GameOfLife:
     def inactive_grid(self):
         return (self.active_grid + 1) % 2
 
-
-
     def handle_events(self):
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
-                #Get the position of the mouseclick
-                mousepos_x, mousepos_y = event.pos
-                print(mousepos_x, mousepos_y)
+                if(event.button==1):
+                    mousepos_x, mousepos_y = event.pos
+                    r, c = ((mousepos_x - cell_size / 2) // cell_size,
+                            (mousepos_y - cell_size / 2) // cell_size)
+                    print(event.pos, '->', (r, c))  # Show result.
+                    mousepos_x, mousepos_y = event.pos# Index Y rows down, X columns to the right
+                    for c in range(self.num_cols):
+                        for r in range(self.num_rows):
+                            if self.grids[self.active_grid][r][c] == 1:
+                                color = color_dead
+                            else:
+                                color = color_alive
+                        posn = (int(c * cell_size + cell_size / 2),
+                                int(r * cell_size + cell_size / 2))
+                        pygame.draw.circle(self.screen, color, posn, int(cell_size / 2), 0)
+                    pygame.display.flip()
 
 
-                """"
-                for row in range(self.num_rows):
-                    for col in range(self.num_cols):
-                        click = pygame.mouse.get_pos()
-                        if self.get_cell == color_alive:
-                            return color_dead
-
-                        else:
-                            return color_dead
-
-            #cell_value.is_in_range(click[0], click[1]):
-"""
+            """"
+                            for c in range(self.num_cols):
+                                for r in range(self.num_rows):
+                                    if self.grids[self.active_grid][r][c] == 1:
+                                        self.grids[self.active_grid][r][c] = 0
+                                        print(self.grids[self.active_grid][r][c])
+                                    else:
+                                        self.grids[self.active_grid][r][c] = 1
+            """
 
             if event.type == pygame.KEYDOWN:
                 if event.unicode == 's':
@@ -201,7 +205,7 @@ class GameOfLife:
                     self.set_grid(0,self.inactive_grid()) #set to 0.
                     self.draw_grid() #Even if it is paused.
                 # Quitfunction
-                elif event.unicode == 'q':
+                elif event.unicode == 'q':  #If I press q, game_over becomes TRUE, which returns/ends in the def run().
                     print("Quitting the grid")
                     self.game_over = True
 
@@ -229,16 +233,11 @@ class GameOfLife:
             self.draw_grid()  # and draw the grid
             self.FPSCLOCK.tick(fps_max)
 
-
-
-
-
 if __name__ == "__main__":
     game = GameOfLife()
     game.run()
 
 '''
-
 #https://gist.github.com/bennuttall/6952575
 #pygame for the game of life.
 #django for website.
