@@ -20,7 +20,7 @@ fps_max = 10
 class GameOfLife:
     def __init__(self):
       #The screen
-        pygame.init()
+        pygame.init() #initialize pygame
         pygame.display.set_caption("Game of Life - Created by Fabio Melis") #Gives a title to the window
         self.FPSCLOCK = pygame.time.Clock()
         self.screen = pygame.display.set_mode(grid_size)
@@ -160,34 +160,32 @@ class GameOfLife:
 
     def handle_events(self):
         for event in pygame.event.get():
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if(event.button==1):
-                    mousepos_x, mousepos_y = event.pos
-                    r, c = ((mousepos_x - cell_size / 2) // cell_size,
-                            (mousepos_y - cell_size / 2) // cell_size)
-                    print(event.pos, '->', (r, c))  # Show result.
-                    mousepos_x, mousepos_y = event.pos# Index Y rows down, X columns to the right
-                    for c in range(self.num_cols):
-                        for r in range(self.num_rows):
-                            if self.grids[self.active_grid][r][c] == 1:
-                                color = color_dead
-                            else:
-                                color = color_alive
-                        posn = (int(c * cell_size + cell_size / 2),
-                                int(r * cell_size + cell_size / 2))
+            if self.paused:
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if(event.button==1):
+                        mousepos_x, mousepos_y = event.pos
+                        r, c = ((mousepos_x - cell_size / 2) // cell_size,
+                                (mousepos_y - cell_size / 2) // cell_size)
+                        print(event.pos, '->', (r, c))  # Show result.
+                        mousepos_x, mousepos_y = event.pos  # Index Y rows down, X columns to the right
+                        for col in range(self.num_cols):
+
+                            for row in range(self.num_rows):
+
+                                if self.grids[self.active_grid][col][row] == 1:
+                                    color = color_dead
+                                    self.grids[self.active_grid][col][row] = 0
+
+                                elif self.grids[self.active_grid][col][row] == 0:
+                                    color = 255, 0, 255  # color_alive
+                                    self.grids[self.active_grid][col][row] = 1
+
+
+                        posn = (int(r * cell_size + cell_size / 2),
+                                int(c * cell_size + cell_size / 2))
+                        print(posn)
                         pygame.draw.circle(self.screen, color, posn, int(cell_size / 2), 0)
-                    pygame.display.flip()
-
-
-            """"
-                            for c in range(self.num_cols):
-                                for r in range(self.num_rows):
-                                    if self.grids[self.active_grid][r][c] == 1:
-                                        self.grids[self.active_grid][r][c] = 0
-                                        print(self.grids[self.active_grid][r][c])
-                                    else:
-                                        self.grids[self.active_grid][r][c] = 1
-            """
+                pygame.display.flip()
 
             if event.type == pygame.KEYDOWN:
                 if event.unicode == 's':
@@ -213,8 +211,6 @@ class GameOfLife:
                 # print(event.unicode)
                 # print("Key pressed")
                 # print(event.unicode)
-
-
 
             # if event is keypress of "s" then pause the loop/game.
             #if event is keypress "r" then randomize grid
