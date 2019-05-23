@@ -16,14 +16,17 @@ COLOR_ALIVE = 1 #alive_cell
 colors = []
 colors.append((  0,   0,   0)) #Black
 colors.append((0, 128, 128)) #blue
+current_generation = [[COLOR_DEAD for y in range(Y_CELLS)] for x in range(X_CELLS)]
+next_generation = [[COLOR_DEAD for y in range(Y_CELLS)] for x in range(X_CELLS)]
+
+
 
 class GameOfLife:
     def __init__(self):
         # Two lists, one for the current generation, and one for the next generation, so you can have iterations.
-        self.current_generation = [[COLOR_DEAD for y in range(Y_CELLS)] for x in range(X_CELLS)]
-        self.next_generation = [[COLOR_DEAD for y in range(Y_CELLS)] for x in range(X_CELLS)]
+
         self.next_iteration = False
-        self.ended = False
+        self.game_over = False
 
 
         #main window
@@ -72,34 +75,35 @@ class GameOfLife:
                int(y * CELL_SIZE + CELL_SIZE / 2))
         # pygame.draw.rect(screen, colors[c], pygame.Rect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE-1, CELL_SIZE-1))
         # pygame.draw.circle(screen, colors[c], pos, CELL_SIZE, CELL_SIZE) #Weird form, can also be used instead of rectangles
-        pygame.draw.circle(screen, colors[c], pos, 5,0)  # Use the last two arguments (radius, width) to change the look of the circles.
+        pygame.draw.circle(self.screen, colors[c], pos, 5,0)  # Use the last two arguments (radius, width) to change the look of the circles.
 
+        pygame.display.flip()
     # Updating the cells.
     def update_gen(self):
         global current_generation
         for y in range(Y_CELLS):
             for x in range(X_CELLS):
                 c = next_generation[x][y]
-                draw_cell(x, y, c)
+                self.draw_cell(x, y, c)
         # Update current_generation
         current_generation = list(next_generation)
 
     # Activate a living cell
     def activate_living_cell(self, x, y):
         global next_generation
-        self.next_generation[x][y] = COLOR_ALIVE
+        next_generation[x][y] = COLOR_ALIVE
 
     # Deactivate a living cell
     def deactivate_living_cell(self, x, y):
         global next_generation
-        self.next_generation[x][y] = COLOR_DEAD
+        next_generation[x][y] = COLOR_DEAD
 
     # Function to check neighbor cell
     def check_cells(self, x, y):
         # Ignoring cells off the edge
         if (x < 0) or (y < 0): return 0
         if (x >= X_CELLS) or (y >= Y_CELLS): return 0
-        if self.current_generation[x][y] == COLOR_ALIVE:
+        if current_generation[x][y] == COLOR_ALIVE:
             return 1
         else:
             return 0
@@ -126,7 +130,7 @@ class GameOfLife:
         for y in range(Y_CELLS):
             for x in range(X_CELLS):
                 # If cell is live, count neighboring live cells
-                n = check_cell_neighbors(x, y)  # number of neighbors
+                n = self.check_cell_neighbors(x, y)  # number of neighbors
                 c = current_generation[x][y]  # current cell (either dead or alive).
                 if c == COLOR_ALIVE:  # If the cell is living:
                     if (n < 2):  # Rule number 1, underpopulation
@@ -144,19 +148,20 @@ class GameOfLife:
     def handle_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                ended = True  # If pressing the quit button, it closes the window.
+                self.game_over = True  # If pressing the quit button, it closes the window.
             if event.type == pygame.MOUSEBUTTONDOWN:  # if pressing the mouse button, it gets the position. If the cell is dead, make it alive, if the cell is alive, make it dead.
                 posn = pygame.mouse.get_pos()
                 x = int(posn[0] / CELL_SIZE)
                 y = int(posn[1] / CELL_SIZE)
-                if self.next_generation[x][y] == COLOR_DEAD:
+                if next_generation[x][y] == COLOR_DEAD:
                     self.activate_living_cell(x, y)
                 else:
                     self.deactivate_living_cell(x, y)
             # Check for q, g, s or w keys
             if event.type == pygame.KEYDOWN:  # keydown --> quits when the button goes down. keyup --> quits when the button goes up again.
                 if event.unicode == 'q':  # Press q to quit.
-                    self.ended = True
+                    self.game_over = True
+
                 elif event.key == pygame.K_SPACE:  # Space for the next iteration manually.
                     self.create_next_gen()
                 elif event.unicode == 'a':  # a to automate the iterations.
@@ -164,18 +169,25 @@ class GameOfLife:
                 elif event.unicode == 's':  # s to stop the automated iterations.
                     self.next_iteration = False
                 elif event.unicode == 'r':  # r to reset the grid.
-                    next_iteration = False
+                    self.next_iteration = False
                     self.init_gen(next_generation, COLOR_DEAD)
 
     def run(self):
-
-        while not self.ended:
+        while not self.game_over:
             self.handle_events()
             if self.next_iteration:  # if next iteration is true, the next gen is created according to the rules.
-                create_next_gen()
+                self.create_next_gen()
+
+
+
 
         # Updating
         self.update_gen()
+
+        self.create_next_gen()
+
+
+
         # Updates the content of the entire display.
         pygame.display.flip()
         # Set the frames per second.
@@ -184,7 +196,6 @@ class GameOfLife:
 if __name__ == "__main__":
     game = GameOfLife()
     game.run()
-screen = GameOfLife()
 tk.mainloop()
 
 
