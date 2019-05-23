@@ -19,9 +19,6 @@ colors.append((0, 128, 128)) #blue
 
 class GameOfLife:
     def __init__(self):
-
-
-
         # Two lists, one for the current generation, and one for the next generation, so you can have iterations.
         self.current_generation = [[COLOR_DEAD for y in range(Y_CELLS)] for x in range(X_CELLS)]
         self.next_generation = [[COLOR_DEAD for y in range(Y_CELLS)] for x in range(X_CELLS)]
@@ -90,19 +87,19 @@ class GameOfLife:
     # Activate a living cell
     def activate_living_cell(self, x, y):
         global next_generation
-        next_generation[x][y] = COLOR_ALIVE
+        self.next_generation[x][y] = COLOR_ALIVE
 
     # Deactivate a living cell
     def deactivate_living_cell(self, x, y):
         global next_generation
-        next_generation[x][y] = COLOR_DEAD
+        self.next_generation[x][y] = COLOR_DEAD
 
     # Function to check neighbor cell
     def check_cells(self, x, y):
         # Ignoring cells off the edge
         if (x < 0) or (y < 0): return 0
-        if (x >= self.X_CELLS) or (y >= self.Y_CELLS): return 0
-        if current_generation[x][y] == COLOR_ALIVE:
+        if (x >= X_CELLS) or (y >= Y_CELLS): return 0
+        if self.current_generation[x][y] == COLOR_ALIVE:
             return 1
         else:
             return 0
