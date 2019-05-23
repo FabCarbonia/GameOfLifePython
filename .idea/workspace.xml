@@ -40,8 +40,8 @@
             <file pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/GameOfLife.py">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="408">
-                    <caret line="24" column="8" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="43" />
+                  <state relative-caret-position="867">
+                    <caret line="51" column="44" lean-forward="true" selection-start-line="51" selection-start-column="44" selection-end-line="51" selection-end-column="44" />
                     <folding>
                       <element signature="e#200#209#0" expanded="true" />
                     </folding>
@@ -68,8 +68,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/practise3.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
-              <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
+            <state relative-caret-position="-187">
+              <caret line="46" column="126" lean-forward="true" selection-start-line="46" selection-start-column="126" selection-end-line="46" selection-end-column="126" />
             </state>
           </provider>
         </entry>
@@ -85,7 +85,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>initGener</find>
       <find>kill</find>
       <find>checkNeigh</find>
       <find>pygame.dis</find>
@@ -106,15 +105,16 @@
       <find>pos</find>
       <find>screen</find>
       <find>self.screen</find>
-      <find>display.flip</find>
       <find>draw_cell</find>
-      <find>pygame.display.flip()</find>
       <find>game_over</find>
       <find>posn</find>
       <find>self.next_iteration</find>
-      <find>generation</find>
       <find>displa</find>
       <find>FPS</find>
+      <find>display.flip</find>
+      <find>generation</find>
+      <find>clock</find>
+      <find>pygame.display.flip()</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -134,8 +134,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-6" />
-    <option name="width" value="1733" />
+    <option name="x" value="-7" />
+    <option name="width" value="1734" />
     <option name="height" value="1407" />
   </component>
   <component name="ProjectView">
@@ -308,15 +308,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-6" y="0" width="1733" height="1407" extended-state="0" />
-    <editor active="true" />
+    <frame x="-6" y="1" width="1932" height="1045" extended-state="0" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.09787736" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4993395" visible="true" weight="0.22841445" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4993395" visible="true" weight="0.31907895" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3987441" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -381,13 +380,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/practise.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="901">
-          <caret line="149" lean-forward="true" selection-start-line="149" selection-end-line="149" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/practise1.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="701">
@@ -400,18 +392,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/GameOfLife.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="8" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="43" />
+        <state relative-caret-position="867">
+          <caret line="51" column="44" lean-forward="true" selection-start-line="51" selection-start-column="44" selection-end-line="51" selection-end-column="44" />
           <folding>
             <element signature="e#200#209#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/practise.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="901">
+          <caret line="149" lean-forward="true" selection-start-line="149" selection-end-line="149" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/practise3.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
+        <state relative-caret-position="-187">
+          <caret line="46" column="126" lean-forward="true" selection-start-line="46" selection-start-column="126" selection-end-line="46" selection-end-column="126" />
         </state>
       </provider>
     </entry>

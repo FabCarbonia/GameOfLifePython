@@ -18,6 +18,7 @@ colors.append((0, 128, 128)) #blue
 current_generation = [[COLOR_DEAD for y in range(Y_CELLS)] for x in range(X_CELLS)]
 next_generation = [[COLOR_DEAD for y in range(Y_CELLS)] for x in range(X_CELLS)]
 
+#Set the max FPS
 fps_max = 10
 
 class GameOfLife:
@@ -46,7 +47,7 @@ class GameOfLife:
         # pygame.draw.circle(screen, colors[c], pos, CELL_SIZE, CELL_SIZE) #Weird form, can also be used instead of rectangles
         pygame.draw.circle(self.screen, colors[c], pos, 5,0)  # Use the last two arguments (radius, width) to change the look of the circles.
 
-        pygame.display.flip()
+
     # Updating the cells.
     def update_gen(self):
         global current_generation
@@ -153,18 +154,8 @@ class GameOfLife:
                 self.create_next_gen()
             # Updating
             self.update_gen()
+            pygame.display.flip()
             self.FPSCLOCK.tick(fps_max)
-
-
-
-
-
-
-
-
-
-
-
 
 
 if __name__ == "__main__":
