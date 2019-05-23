@@ -105,6 +105,7 @@ screen = pygame.display.set_mode(GRID_SIZE)# Create the window with the GRID_SIZ
 # Initialise the generations - empty grid.
 init_gen(current_generation, COLOR_DEAD)
 
+#Clock to set the FPS
 clock = pygame.time.Clock()
 # Initialise variables
 ended = False

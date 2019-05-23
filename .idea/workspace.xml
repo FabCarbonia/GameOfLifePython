@@ -16,8 +16,8 @@
             <file pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/test.py">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="289">
-                    <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+                  <state relative-caret-position="575">
+                    <caret line="40" column="18" selection-start-line="40" selection-start-column="18" selection-end-line="40" selection-end-column="18" />
                     <folding>
                       <element signature="e#0#20#0" expanded="true" />
                     </folding>
@@ -25,13 +25,25 @@
                 </provider>
               </entry>
             </file>
-            <file pinned="false" current-in-tab="true">
+            <file pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/GameOfLife.py">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="2907">
-                    <caret line="171" lean-forward="true" selection-start-line="171" selection-end-line="171" />
+                  <state relative-caret-position="-1577">
+                    <caret line="81" column="30" lean-forward="true" selection-start-line="81" selection-start-column="29" selection-end-line="81" selection-end-column="30" />
                     <folding>
                       <element signature="e#200#209#0" expanded="true" />
+                    </folding>
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/practise1.py">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="949">
+                    <caret line="180" selection-start-line="180" selection-end-line="180" selection-end-column="26" />
+                    <folding>
+                      <element signature="e#0#9#0" expanded="true" />
                     </folding>
                   </state>
                 </provider>
@@ -47,20 +59,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/practise.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="615">
-              <caret line="110" column="22" lean-forward="true" selection-start-line="110" selection-start-column="22" selection-end-line="110" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/practise1.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="40" column="34" lean-forward="true" selection-start-line="40" selection-start-column="34" selection-end-line="40" selection-end-column="34" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="804">
+              <caret line="136" column="60" lean-forward="true" selection-start-line="136" selection-start-column="60" selection-end-line="136" selection-end-column="60" />
             </state>
           </provider>
         </entry>
@@ -76,15 +76,9 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>circle</find>
-      <find>pos</find>
-      <find>screen</find>
-      <find>root</find>
-      <find>pygame.displa</find>
       <find>done</find>
       <find>current_ge</find>
       <find>generation</find>
-      <find>grid</find>
       <find>platform</find>
       <find>mainlop</find>
       <find>pygame.display.set_mode</find>
@@ -99,13 +93,19 @@
       <find>checkNeigh</find>
       <find>pygame.dis</find>
       <find>neighbour</find>
-      <find>display.flip</find>
-      <find>next_generat</find>
       <find>breed</find>
       <find>init_ge</find>
       <find>update_gen</find>
       <find>current_gen</find>
       <find>breedcells</find>
+      <find>next_generat</find>
+      <find>self.screen.fill</find>
+      <find>grid</find>
+      <find>init_gen</find>
+      <find>clock</find>
+      <find>display.flip</find>
+      <find>init</find>
+      <find>pos</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -116,9 +116,10 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/GameOfLife.py" />
-        <option value="$PROJECT_DIR$/practise1.py" />
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/practise.py" />
+        <option value="$PROJECT_DIR$/practise2.py" />
+        <option value="$PROJECT_DIR$/practise1.py" />
       </list>
     </option>
   </component>
@@ -167,7 +168,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.test">
+  <component name="RunManager" selected="Python.practise1">
     <configuration name="Conways" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="GameOfLifePython" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -275,9 +276,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.test" />
-        <item itemvalue="Python.practise" />
         <item itemvalue="Python.practise1" />
+        <item itemvalue="Python.practise" />
+        <item itemvalue="Python.test" />
         <item itemvalue="Python.GameOfLife" />
         <item itemvalue="Python.Conways" />
       </list>
@@ -350,40 +351,50 @@
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Temp/Temp1_John Conway's Game of Life (1).zip/John Conway's Game of Life/Conways.py" />
-    <entry file="file://$PROJECT_DIR$/test.py">
+    <entry file="file://$PROJECT_DIR$/practise2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/practise1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="40" column="34" lean-forward="true" selection-start-line="40" selection-start-column="34" selection-end-line="40" selection-end-column="34" />
+        <state relative-caret-position="901">
+          <caret line="202" selection-start-line="202" selection-end-line="202" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/practise.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="804">
+          <caret line="136" column="60" lean-forward="true" selection-start-line="136" selection-start-column="60" selection-end-line="136" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="575">
+          <caret line="40" column="18" selection-start-line="40" selection-start-column="18" selection-end-line="40" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/GameOfLife.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2907">
-          <caret line="171" lean-forward="true" selection-start-line="171" selection-end-line="171" />
+        <state relative-caret-position="-1577">
+          <caret line="81" column="30" lean-forward="true" selection-start-line="81" selection-start-column="29" selection-end-line="81" selection-end-column="30" />
           <folding>
             <element signature="e#200#209#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/practise.py">
+    <entry file="file://$PROJECT_DIR$/practise1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="110" column="22" lean-forward="true" selection-start-line="110" selection-start-column="22" selection-end-line="110" selection-end-column="22" />
+        <state relative-caret-position="949">
+          <caret line="180" selection-start-line="180" selection-end-line="180" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
