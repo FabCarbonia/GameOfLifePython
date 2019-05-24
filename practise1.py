@@ -1,3 +1,4 @@
+# CLass with tkinter, not working.
 import os
 import pygame
 import tkinter as tk
@@ -64,12 +65,14 @@ class GameOfLife:
         self.init_gen(self.current_generation, COLOR_DEAD)
         self.root.mainloop()
 
-    # Initializing all the cells.
+        # Initializing all the cells.
+
     def init_gen(self, generation, c):
         for y in range(Y_CELLS):
             for x in range(X_CELLS):
                 generation[x][y] = c
-    # Drawing the cells, color black or blue at location x/y.
+        # Drawing the cells, color black or blue at location x/y.
+
     def draw_cell(self, x, y, c):
         pos = (int(x * CELL_SIZE + CELL_SIZE / 2),
                int(y * CELL_SIZE + CELL_SIZE / 2))
@@ -77,7 +80,6 @@ class GameOfLife:
         # pygame.draw.circle(screen, colors[c], pos, CELL_SIZE, CELL_SIZE) #Weird form, can also be used instead of rectangles
         pygame.draw.circle(self.screen, colors[c], pos, 5,0)  # Use the last two arguments (radius, width) to change the look of the circles.
 
-        pygame.display.flip()
     # Updating the cells.
     def update_gen(self):
         global current_generation
@@ -161,37 +163,34 @@ class GameOfLife:
             if event.type == pygame.KEYDOWN:  # keydown --> quits when the button goes down. keyup --> quits when the button goes up again.
                 if event.unicode == 'q':  # Press q to quit.
                     self.game_over = True
+                    print("q")
 
                 elif event.key == pygame.K_SPACE:  # Space for the next iteration manually.
                     self.create_next_gen()
+                    print("keypress")
                 elif event.unicode == 'a':  # a to automate the iterations.
                     self.next_iteration = True
+                    print("a")
                 elif event.unicode == 's':  # s to stop the automated iterations.
                     self.next_iteration = False
+                    print("s")
                 elif event.unicode == 'r':  # r to reset the grid.
                     self.next_iteration = False
                     self.init_gen(next_generation, COLOR_DEAD)
+                    print("r")
 
     def run(self):
         while not self.game_over:
+            # Set the frames per second.
             self.handle_events()
             if self.next_iteration:  # if next iteration is true, the next gen is created according to the rules.
                 self.create_next_gen()
+            # Updating
+            self.update_gen()
+            pygame.display.flip()
+            self.FPSCLOCK.tick(fps_max)
 
 
-
-
-        # Updating
-        self.update_gen()
-
-        self.create_next_gen()
-
-
-
-        # Updates the content of the entire display.
-        pygame.display.flip()
-        # Set the frames per second.
-        self.clock.tick(10)
 
 if __name__ == "__main__":
     game = GameOfLife()

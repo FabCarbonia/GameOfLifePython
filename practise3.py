@@ -1,4 +1,4 @@
-
+#Class without tkinter, working.
 import pygame
 
 # Defining the grid dimensions.
