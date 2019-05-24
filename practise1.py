@@ -57,7 +57,7 @@ class GameOfLife:
             os.environ['SDL_VIDEODRIVER'] = 'windib'
         elif system == "Linux":
             os.environ['SDL_VIDEODRIVER'] = 'x11'
-        self.root.update_idletasks()
+
 
         # Starting pygame
         pygame.init()
@@ -192,7 +192,7 @@ class GameOfLife:
             self.update_gen()
             pygame.display.flip()
             self.FPSCLOCK.tick(fps_max)
-            self.root.mainloop()
+            self.root.update()
 
 if __name__ == "__main__":
     game = GameOfLife()
