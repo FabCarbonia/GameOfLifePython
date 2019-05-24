@@ -44,6 +44,13 @@ class GameOfLife:
         # space for pygame
         self.game_border = tk.Frame(self.frame, width=750, height=1000, highlightbackground='green', highlightthickness=10)
 
+        # Packing the windows
+        self.frame.pack(expand=True)
+        self.frame.pack_propagate(0)
+        self.menu.pack(side="left")
+        self.menu.pack_propagate(0)
+        self.game_border.pack()
+
         # Buttons
         self.button_start = tk.Button(self.menu, text="Start", height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.start_button)
         self.button_stop = tk.Button(self.menu, text="Stop", height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.stop_button)
@@ -54,8 +61,8 @@ class GameOfLife:
 
         #Sliders
         self.slider_random = tk.Scale(self.menu, from_=0, to=100, orient="horizontal")
-
-
+        self.slider_random.set(50)
+        print(self.slider_random.get())
 
         # Packing the buttons
         self.button_start.pack()
@@ -68,6 +75,9 @@ class GameOfLife:
         # Packing the sliders
         self.slider_random.pack()
 
+
+
+
         # Placing the buttons
         self.button_start.place(x=40, y=50)
         self.button_stop.place(x=40, y=200)
@@ -79,12 +89,6 @@ class GameOfLife:
         # Placing the slicers
         self.slider_random.place(x=62, y=590)
 
-        # Packing the windows
-        self.frame.pack(expand=True)
-        self.frame.pack_propagate(0)
-        self.menu.pack(side="left")
-        self.menu.pack_propagate(0)
-        self.game_border.pack()
 
         # This embeds the pygame window in the pygame frame.
         os.environ['SDL_WINDOWID'] = str(self.game_border.winfo_id())
@@ -102,6 +106,10 @@ class GameOfLife:
 
         # Initialise the generations
         self.init_gen(current_generation, COLOR_DEAD)
+
+        # Getting the slider value
+
+
 
 
     # Button functions
