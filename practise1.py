@@ -86,9 +86,6 @@ class GameOfLife:
         self.menu.pack_propagate(0)
         self.game_border.pack()
 
-
-
-
         # This embeds the pygame window in the pygame frame.
         os.environ['SDL_WINDOWID'] = str(self.game_border.winfo_id())
         system = platform.system()
@@ -105,6 +102,7 @@ class GameOfLife:
 
         # Initialise the generations
         self.init_gen(current_generation, COLOR_DEAD)
+
 
     # Button functions
     def start_button(self):
@@ -140,7 +138,7 @@ class GameOfLife:
         print(self.total_cells)
         for row in range(X_CELLS):
             for col in range(Y_CELLS):
-                next_generation[row][col] = random.choice([0,0,0,1]) #10% : [0,0,0,0,0,0,0,0,0,1]
+                next_generation[row][col] = random.choice([0,0,0,0,0,0,0,0,0,1]) #10% : [0,0,0,0,0,0,0,0,0,1]  #25%[0,0,0,1]
 
     # Drawing the cells, color black or blue at location x/y.
     def draw_cell(self, x, y, c):
