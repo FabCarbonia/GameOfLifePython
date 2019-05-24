@@ -1,3 +1,4 @@
+#Gameoflife without class and tkinter.
 import pygame
 
 # Defining the grid dimensions.

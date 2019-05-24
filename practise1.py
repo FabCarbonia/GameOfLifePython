@@ -17,18 +17,21 @@ COLOR_ALIVE = 1 #alive_cell
 colors = []
 colors.append((  0,   0,   0)) #Black
 colors.append((0, 128, 128)) #blue
+
+# Two lists, one for the current generation, and one for the next generation, so you can have iterations.
 current_generation = [[COLOR_DEAD for y in range(Y_CELLS)] for x in range(X_CELLS)]
 next_generation = [[COLOR_DEAD for y in range(Y_CELLS)] for x in range(X_CELLS)]
 
-
+#Set the max FPS
+fps_max = 10
 
 class GameOfLife:
     def __init__(self):
-        # Two lists, one for the current generation, and one for the next generation, so you can have iterations.
-
+        # Clock to set the FPS
+        self.FPSCLOCK = pygame.time.Clock()
+        # Setting variables for later use
         self.next_iteration = False
         self.game_over = False
-
 
         #main window
         self.root = tk.Tk()
@@ -40,7 +43,7 @@ class GameOfLife:
         # space for pygame
         self.game_border = tk.Frame(self.frame, width=500, height=500, highlightbackground='green', highlightthickness=10)
 
-        # Packing them into the window
+        #Packing them into the window
         self.frame.pack(expand=True)
         self.frame.pack_propagate(0)
         self.menu.pack(side="left")
@@ -54,18 +57,18 @@ class GameOfLife:
             os.environ['SDL_VIDEODRIVER'] = 'windib'
         elif system == "Linux":
             os.environ['SDL_VIDEODRIVER'] = 'x11'
+        self.root.update_idletasks()
 
         # Starting pygame
         pygame.init()
-        pygame.display.set_caption("Game of Life - Created by Fabio Melis")  # Gives a title to the window
+        pygame.display.set_caption("Game of Life - Created by ")  # Gives a title to the window
         self.screen = pygame.display.set_mode(GRID_SIZE)  # Create the window with the GRID_SIZE.
-        #Clock to set the FPS
-        self.clock = pygame.time.Clock()
-        # Initialise the generations
-        self.init_gen(self.current_generation, COLOR_DEAD)
-        self.root.mainloop()
 
-        # Initializing all the cells.
+
+        # Initialise the generations
+        self.init_gen(current_generation, COLOR_DEAD)
+
+
 
     def init_gen(self, generation, c):
         for y in range(Y_CELLS):
@@ -189,14 +192,11 @@ class GameOfLife:
             self.update_gen()
             pygame.display.flip()
             self.FPSCLOCK.tick(fps_max)
-
-
+            self.root.mainloop()
 
 if __name__ == "__main__":
     game = GameOfLife()
     game.run()
-tk.mainloop()
-
 
 
 
