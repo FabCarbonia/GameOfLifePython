@@ -5,7 +5,7 @@ import tkinter as tk
 import platform
 
 # Defining the grid dimensions.
-GRID_SIZE = width, height = 500, 500
+GRID_SIZE = width, height = 750, 1000
 # Defining the size of the cells, and how many cells there are in the x and y direction.
 CELL_SIZE = 10
 X_CELLS = int(width/CELL_SIZE)
@@ -37,18 +37,32 @@ class GameOfLife:
         self.root = tk.Tk()
         self.root.title("Main window title") #title
         #Create a frame
-        self.frame = tk.Frame(self.root, width=1000, height=1000, highlightbackground='red', highlightthickness=10) #Main frame
+        self.frame = tk.Frame(self.root, width=1000, height=1000, highlightbackground='red') #Main frame
         # menu for buttons
-        self.menu = tk.Frame(self.frame, width=100, height=100, highlightbackground='#595959', highlightthickness=10)
+        self.menu = tk.Frame(self.frame, width=250, height=1000, highlightbackground='#595959', highlightthickness=10)
         # space for pygame
-        self.game_border = tk.Frame(self.frame, width=500, height=500, highlightbackground='green', highlightthickness=10)
+        self.game_border = tk.Frame(self.frame, width=750, height=1000, highlightbackground='green', highlightthickness=10)
+
+        #Buttons
+        self.button_start = tk.Button(self.menu, text="Start", height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80")
+        self.button_stop = tk.Button(self.menu, text="Stop", height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80")
+        self.button_iteration = tk.Button(self.menu, text="Next iteration",  height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80")
+        self.button_reset = tk.Button(self.menu, text="Reset",  height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80")
+        self.button_quit = tk.Button(self.menu, text="Quit",  height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.master.destroy())
+
+        #Packing the buttons
+        self.button_start.pack()
+        self.button_stop.pack()
+        self.button_iteration.pack()
+        self.button_reset.pack()
+        self.button_quit.pack()
 
         #Packing them into the window
         self.frame.pack(expand=True)
         self.frame.pack_propagate(0)
         self.menu.pack(side="left")
         self.menu.pack_propagate(0)
-        self.game_border.pack(side="bottom")
+        self.game_border.pack()
 
         #This embeds the pygame window in the pygame frame.
         os.environ['SDL_WINDOWID'] = str(self.game_border.winfo_id())
@@ -67,8 +81,6 @@ class GameOfLife:
 
         # Initialise the generations
         self.init_gen(current_generation, COLOR_DEAD)
-
-
 
     def init_gen(self, generation, c):
         for y in range(Y_CELLS):
