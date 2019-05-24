@@ -62,7 +62,10 @@ class GameOfLife:
         #Sliders
         self.slider_random = tk.Scale(self.menu, from_=0, to=100, orient="horizontal")
         self.slider_random.set(50)
-        print(self.slider_random.get())
+        #print(self.slider_random.get())
+        self.get_random_value = self.slider_random.get()
+        print(self.get_random_value)
+
 
         # Packing the buttons
         self.button_start.pack()
@@ -107,11 +110,6 @@ class GameOfLife:
         # Initialise the generations
         self.init_gen(current_generation, COLOR_DEAD)
 
-        # Getting the slider value
-
-
-
-
     # Button functions
     def start_button(self):
         self.next_iteration = True
@@ -128,16 +126,6 @@ class GameOfLife:
         for y in range(Y_CELLS):
             for x in range(X_CELLS):
                 generation[x][y] = c
-
-    def set_grid(self, value=None, grid=0):
-        for r in range(X_CELLS):
-            for c in range(Y_CELLS):
-                if value is None:
-                    cell_value = random.choice([0, 1])
-                else:
-                    cell_value = value
-                    next_generation[grid][r][c] = cell_value
-
 
     def set_grid(self):
         self.next_iteration = False
