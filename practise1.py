@@ -3,6 +3,7 @@ import os
 import pygame
 import tkinter as tk
 import platform
+import random
 
 # Defining the grid dimensions.
 GRID_SIZE = width, height = 750, 1000
@@ -33,45 +34,68 @@ class GameOfLife:
         self.next_iteration = False
         self.game_over = False
 
-        #main window
+        # main window
         self.root = tk.Tk()
         self.root.title("Main window title") #title
-        #Create a frame
+        # Create a frame
         self.frame = tk.Frame(self.root, width=1000, height=1000, highlightbackground='red') #Main frame
         # menu for buttons
         self.menu = tk.Frame(self.frame, width=250, height=1000, highlightbackground='#595959', highlightthickness=10)
         # space for pygame
         self.game_border = tk.Frame(self.frame, width=750, height=1000, highlightbackground='green', highlightthickness=10)
 
-        #Buttons
-        self.button_start = tk.Button(self.menu, text="Start", height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80")
-        self.button_stop = tk.Button(self.menu, text="Stop", height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80")
-        self.button_iteration = tk.Button(self.menu, text="Next iteration",  height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80")
-        self.button_reset = tk.Button(self.menu, text="Reset",  height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80")
-        self.button_quit = tk.Button(self.menu, text="Quit",  height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.master.destroy())
+        # Buttons
+        self.button_start = tk.Button(self.menu, text="Start", height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.start_button)
+        self.button_stop = tk.Button(self.menu, text="Stop", height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.stop_button)
+        self.button_iteration = tk.Button(self.menu, text="Next iteration",  height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.create_next_gen)
+        self.button_random = tk.Button(self.menu, text="Random", height=5, width=20, fg="black", activeforeground="red",background="grey80", activebackground="grey80", command=self.set_grid)
+        self.button_reset = tk.Button(self.menu, text="Reset",  height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.reset_button)
+        self.button_quit = tk.Button(self.menu, text="Quit",  height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.quit_button)
 
-        #Packing the buttons
+        #Sliders
+        self.slider_random = tk.Scale(self.menu, from_=0, to=100, orient="horizontal")
+
+
+
+        # Packing the buttons
         self.button_start.pack()
         self.button_stop.pack()
         self.button_iteration.pack()
+        self.button_random.pack()
         self.button_reset.pack()
         self.button_quit.pack()
 
-        #Packing them into the window
+        # Packing the sliders
+        self.slider_random.pack()
+
+        # Placing the buttons
+        self.button_start.place(x=40, y=50)
+        self.button_stop.place(x=40, y=200)
+        self.button_iteration.place(x=40, y=350)
+        self.button_random.place(x=40, y=500)
+        self.button_reset.place(x=40, y=650)
+        self.button_quit.place(x=40, y=800)
+
+        # Placing the slicers
+        self.slider_random.place(x=62, y=590)
+
+        # Packing the windows
         self.frame.pack(expand=True)
         self.frame.pack_propagate(0)
         self.menu.pack(side="left")
         self.menu.pack_propagate(0)
         self.game_border.pack()
 
-        #This embeds the pygame window in the pygame frame.
+
+
+
+        # This embeds the pygame window in the pygame frame.
         os.environ['SDL_WINDOWID'] = str(self.game_border.winfo_id())
         system = platform.system()
         if system == "Windows":
             os.environ['SDL_VIDEODRIVER'] = 'windib'
         elif system == "Linux":
             os.environ['SDL_VIDEODRIVER'] = 'x11'
-
 
         # Starting pygame
         pygame.init()
@@ -82,12 +106,43 @@ class GameOfLife:
         # Initialise the generations
         self.init_gen(current_generation, COLOR_DEAD)
 
+    # Button functions
+    def start_button(self):
+        self.next_iteration = True
+    def stop_button(self):
+        self.next_iteration = False
+    def reset_button(self):
+        self.next_iteration = False
+        self.init_gen(next_generation, COLOR_DEAD)
+    def quit_button(self):
+        self.game_over = True
+
+    # Initializing all the cells.
     def init_gen(self, generation, c):
         for y in range(Y_CELLS):
             for x in range(X_CELLS):
                 generation[x][y] = c
-        # Drawing the cells, color black or blue at location x/y.
 
+    def set_grid(self, value=None, grid=0):
+        for r in range(X_CELLS):
+            for c in range(Y_CELLS):
+                if value is None:
+                    cell_value = random.choice([0, 1])
+                else:
+                    cell_value = value
+                    next_generation[grid][r][c] = cell_value
+
+
+    def set_grid(self):
+        self.next_iteration = False
+        self.init_gen(next_generation, COLOR_DEAD)
+        self.total_cells = X_CELLS * Y_CELLS
+        print(self.total_cells)
+        for row in range(X_CELLS):
+            for col in range(Y_CELLS):
+                next_generation[row][col] = random.choice([0,0,0,1]) #10% : [0,0,0,0,0,0,0,0,0,1]
+
+    # Drawing the cells, color black or blue at location x/y.
     def draw_cell(self, x, y, c):
         pos = (int(x * CELL_SIZE + CELL_SIZE / 2),
                int(y * CELL_SIZE + CELL_SIZE / 2))
