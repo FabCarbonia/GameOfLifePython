@@ -1,3 +1,10 @@
+#To do:
+#Create a button that counts the living and dead cells.
+# Fix the slider.
+# SLider for the grid size.
+#Drag the mouse to select cells instead of clicking. LEFT CLICK TO MANUALLY SELECT CELLS< RIGHT CLICK TO DRAG.
+
+
 # CLass with tkinter, not working.
 import os
 import pygame
@@ -28,6 +35,8 @@ fps_max = 10
 
 class GameOfLife:
     def __init__(self):
+        self.drawing_cells = False
+
         # Clock to set the FPS
         self.FPSCLOCK = pygame.time.Clock()
         # Setting variables for later use
@@ -55,17 +64,16 @@ class GameOfLife:
         self.button_start = tk.Button(self.menu, text="Start", height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.start_button)
         self.button_stop = tk.Button(self.menu, text="Stop", height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.stop_button)
         self.button_iteration = tk.Button(self.menu, text="Next iteration",  height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.create_next_gen)
-        self.button_random = tk.Button(self.menu, text="Random", height=5, width=20, fg="black", activeforeground="red",background="grey80", activebackground="grey80", command=self.set_grid)
+        self.button_random = tk.Button(self.menu, text="Random", height=5, width=20, fg="black", activeforeground="red",background="grey80", activebackground="grey80", command=self.random_grid)
         self.button_reset = tk.Button(self.menu, text="Reset",  height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.reset_button)
         self.button_quit = tk.Button(self.menu, text="Quit",  height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.quit_button)
 
         #Sliders
-        self.slider_random = tk.Scale(self.menu, from_=0, to=100, orient="horizontal")
+        self.slider_random = tk.Scale(self.menu, from_=0, to=100, orient="horizontal", command=self.slider_value)
         self.slider_random.set(50)
         #print(self.slider_random.get())
-        self.get_random_value = self.slider_random.get()
-        print(self.get_random_value)
-
+        #self.get_random_value = self.slider_random.get()
+        #print(self.get_random_value)
 
         # Packing the buttons
         self.button_start.pack()
@@ -78,9 +86,6 @@ class GameOfLife:
         # Packing the sliders
         self.slider_random.pack()
 
-
-
-
         # Placing the buttons
         self.button_start.place(x=40, y=50)
         self.button_stop.place(x=40, y=200)
@@ -91,7 +96,6 @@ class GameOfLife:
 
         # Placing the slicers
         self.slider_random.place(x=62, y=590)
-
 
         # This embeds the pygame window in the pygame frame.
         os.environ['SDL_WINDOWID'] = str(self.game_border.winfo_id())
@@ -106,9 +110,13 @@ class GameOfLife:
         pygame.display.set_caption("Game of Life - Created by ")  # Gives a title to the window
         self.screen = pygame.display.set_mode(GRID_SIZE)  # Create the window with the GRID_SIZE.
 
-
         # Initialise the generations
         self.init_gen(current_generation, COLOR_DEAD)
+
+    def slider_value(self, value):
+        self.value = value
+        #print(self.slider_random.get())
+        #print(self.value)
 
     # Button functions
     def start_button(self):
@@ -127,14 +135,17 @@ class GameOfLife:
             for x in range(X_CELLS):
                 generation[x][y] = c
 
-    def set_grid(self):
+    def random_grid(self):
         self.next_iteration = False
         self.init_gen(next_generation, COLOR_DEAD)
-        self.total_cells = X_CELLS * Y_CELLS
-        print(self.total_cells)
+        #self.total_cells = X_CELLS * Y_CELLS
+        #print(self.total_cells)
         for row in range(X_CELLS):
             for col in range(Y_CELLS):
                 next_generation[row][col] = random.choice([0,0,0,0,0,0,0,0,0,1]) #10% : [0,0,0,0,0,0,0,0,0,1]  #25%[0,0,0,1]
+                #USING A WEIGHTED LIST
+                #next_generation[row][col] = random.choice([0*self.get_random_value,1*(100-self.get_random_value)]) #0 * something is nothing.
+
 
     # Drawing the cells, color black or blue at location x/y.
     def draw_cell(self, x, y, c):
@@ -213,22 +224,25 @@ class GameOfLife:
     # Runs the game loop
     def handle_events(self):
         for event in pygame.event.get():
+            posn = pygame.mouse.get_pos()
+            x = int(posn[0] / CELL_SIZE)
+            y = int(posn[1] / CELL_SIZE)
+            # print(x,y)
             if event.type == pygame.QUIT:
                 self.game_over = True  # If pressing the quit button, it closes the window.
             if event.type == pygame.MOUSEBUTTONDOWN:  # if pressing the mouse button, it gets the position. If the cell is dead, make it alive, if the cell is alive, make it dead.
-                posn = pygame.mouse.get_pos()
-                x = int(posn[0] / CELL_SIZE)
-                y = int(posn[1] / CELL_SIZE)
-                if next_generation[x][y] == COLOR_DEAD:
-                    self.activate_living_cell(x, y)
-                else:
-                    self.deactivate_living_cell(x, y)
-            # Check for q, g, s or w keys
+                if event.button == 1: #Left click is 1, right click is 3.
+                    if next_generation[x][y] == COLOR_DEAD:
+                        self.activate_living_cell(x, y)
+                    else:
+                        self.deactivate_living_cell(x, y)
+            if event.type == pygame.MOUSEMOTION and event.buttons[2]:
+                self.activate_living_cell(x, y)
+
             if event.type == pygame.KEYDOWN:  # keydown --> quits when the button goes down. keyup --> quits when the button goes up again.
                 if event.unicode == 'q':  # Press q to quit.
                     self.game_over = True
                     print("q")
-
                 elif event.key == pygame.K_SPACE:  # Space for the next iteration manually.
                     self.create_next_gen()
                     print("keypress")
