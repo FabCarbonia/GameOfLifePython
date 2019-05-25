@@ -2,15 +2,14 @@
 #Create a button that counts the living and dead cells.
 # Fix the slider.
 # SLider for the grid size.
-#Drag the mouse to select cells instead of clicking. LEFT CLICK TO MANUALLY SELECT CELLS< RIGHT CLICK TO DRAG.
+# Increase the speed of the drawing
 
-
-# CLass with tkinter, not working.
 import os
 import pygame
 import tkinter as tk
 import platform
 import random
+import itertools
 
 # Defining the grid dimensions.
 GRID_SIZE = width, height = 750, 1000
@@ -35,8 +34,6 @@ fps_max = 10
 
 class GameOfLife:
     def __init__(self):
-        self.drawing_cells = False
-
         # Clock to set the FPS
         self.FPSCLOCK = pygame.time.Clock()
         # Setting variables for later use
@@ -115,8 +112,6 @@ class GameOfLife:
 
     def slider_value(self, value):
         self.value = value
-        #print(self.slider_random.get())
-        #print(self.value)
 
     # Button functions
     def start_button(self):
@@ -135,17 +130,19 @@ class GameOfLife:
             for x in range(X_CELLS):
                 generation[x][y] = c
 
+    # Random grid based on the slider. Example: Slider at 20 --> 20% of the cells is activated randomly.
     def random_grid(self):
         self.next_iteration = False
         self.init_gen(next_generation, COLOR_DEAD)
         #self.total_cells = X_CELLS * Y_CELLS
         #print(self.total_cells)
+        self.percentage_zero = list(itertools.repeat(0,     (100 - self.slider_random.get())))
+        self.percentage_one = list(itertools.repeat(1,      (self.slider_random.get())))
+        #print(self.percentage_zero)
+        #print(self.percentage_one)
         for row in range(X_CELLS):
             for col in range(Y_CELLS):
-                next_generation[row][col] = random.choice([0,0,0,0,0,0,0,0,0,1]) #10% : [0,0,0,0,0,0,0,0,0,1]  #25%[0,0,0,1]
-                #USING A WEIGHTED LIST
-                #next_generation[row][col] = random.choice([0*self.get_random_value,1*(100-self.get_random_value)]) #0 * something is nothing.
-
+                next_generation[row][col] = random.choice(self.percentage_zero + self.percentage_one)
 
     # Drawing the cells, color black or blue at location x/y.
     def draw_cell(self, x, y, c):
