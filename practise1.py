@@ -1,8 +1,10 @@
 #To do:
 #Create a button that counts the living and dead cells.
-# Fix the slider.
 # SLider for the grid size.
 # Increase the speed of the drawing
+#If slider = 100, all the cells are activated. This means = overpopulation, so everything should die. This does not happen. Fix this.
+#Explain that the qsa space buttons can be used as well.
+# Square or circles button.
 
 import os
 import pygame
@@ -65,7 +67,11 @@ class GameOfLife:
         self.button_reset = tk.Button(self.menu, text="Reset",  height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.reset_button)
         self.button_quit = tk.Button(self.menu, text="Quit",  height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.quit_button)
 
-        #Sliders
+        # Labels
+        self.label_alive = tk.Label(self.menu, text=self.count_alive,  height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80")
+        self.label_dead = tk.Label(self.menu, text="Dead cells"+" :"+" 1000",  height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80")
+
+        # Sliders
         self.slider_random = tk.Scale(self.menu, from_=0, to=100, orient="horizontal", command=self.slider_value)
         self.slider_random.set(50)
         #print(self.slider_random.get())
@@ -79,6 +85,10 @@ class GameOfLife:
         self.button_random.pack()
         self.button_reset.pack()
         self.button_quit.pack()
+
+        # Packing the labels
+        self.label_alive.pack()
+        self.label_dead.pack()
 
         # Packing the sliders
         self.slider_random.pack()
@@ -143,6 +153,7 @@ class GameOfLife:
         for row in range(X_CELLS):
             for col in range(Y_CELLS):
                 next_generation[row][col] = random.choice(self.percentage_zero + self.percentage_one)
+                print(next_generation[row][col])
 
     # Drawing the cells, color black or blue at location x/y.
     def draw_cell(self, x, y, c):
@@ -218,7 +229,25 @@ class GameOfLife:
                         # Rule number 4: A dead cell with three living neighbors becomes alive.
                         next_generation[x][y] = COLOR_ALIVE
 
-    # Runs the game loop
+
+    def count_dead(self):
+        for row in range(X_CELLS):
+            for col in range(Y_CELLS):
+                self.number_dead = sum(next_generation[row][col] == 0)
+                return number_alive
+
+
+
+    def count_alive(self):
+        alive_cell_count = []
+        for y in range(Y_CELLS):
+            for x in range(X_CELLS):
+                alive_cell_count.append(current_generation[x][y] == COLOR_ALIVE)
+
+
+
+
+
     def handle_events(self):
         for event in pygame.event.get():
             posn = pygame.mouse.get_pos()
@@ -254,6 +283,7 @@ class GameOfLife:
                     self.init_gen(next_generation, COLOR_DEAD)
                     print("r")
 
+    # Runs the game loop
     def run(self):
         while not self.game_over:
             # Set the frames per second.
