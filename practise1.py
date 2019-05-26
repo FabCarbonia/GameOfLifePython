@@ -4,96 +4,74 @@
 # Increase the speed of the drawing
 #If slider = 100, all the cells are activated. This means = overpopulation, so everything should die. This does not happen. Fix this.
 #Explain that the qsa space buttons can be used as well.
-# Square or circles button.
+# Square or circles button. ANd color button.
+# Python ruies
+# add a dropdown file menu with an instruction button.
+# Create a package.
+# Limit all lines to 72 characters.
+# Neighbors 1 row/col further from the cell.
+# Create a package, so that other people can use it.
+# Explain the keyboard presses.
 
-import os
-import pygame
 import tkinter as tk
-import platform
-import random
-import itertools
+import itertools, os, platform, pygame, random
 
 # Defining the grid dimensions.
-GRID_SIZE = width, height = 750, 1000
-# Defining the size of the cells, and how many cells there are in the x and y direction.
+GRID_SIZE = WIDTH, HEIGHT = 750, 1000
+
+# Defining the cell size and the number of cells in the X and Y direction.
 CELL_SIZE = 10
-X_CELLS = int(width/CELL_SIZE)
-Y_CELLS = int(height/CELL_SIZE)
+X_CELLS = int(WIDTH/CELL_SIZE)
+Y_CELLS = int(HEIGHT/CELL_SIZE)
 
-#  Defining a color for dead cells (background) and alive cells.
-COLOR_DEAD = 0 #background
-COLOR_ALIVE = 1 #alive_cell
+# Defining the number and color for dead and living cells.
+COLOR_DEAD = 0
+COLOR_ALIVE = 1
 colors = []
-colors.append((  0,   0,   0)) #Black
-colors.append((0, 128, 128)) #blue
+colors.append((0, 0, 0))  # Black
+colors.append((0, 128, 128))  # blue
 
-# Two lists, one for the current generation, and one for the next generation, so you can have iterations.
+# Defining two lists: current generation and next generation.
 current_generation = [[COLOR_DEAD for y in range(Y_CELLS)] for x in range(X_CELLS)]
 next_generation = [[COLOR_DEAD for y in range(Y_CELLS)] for x in range(X_CELLS)]
 
-#Set the max FPS
-fps_max = 10
+# Defining the max frames per second/speed of the game.
+FPS_MAX = 10
 
 class GameOfLife:
+    """
+    describe what the method does.
+    """
     def __init__(self):
-        # Clock to set the FPS
-        self.FPSCLOCK = pygame.time.Clock()
-        # Setting variables for later use
-        self.next_iteration = False
-        self.game_over = False
-
-        # main window
+        # Initializing the interpreter and creating a root window and title.
         self.root = tk.Tk()
-        self.root.title("Main window title") #title
-        # Create a frame
-        self.frame = tk.Frame(self.root, width=1000, height=1000, highlightbackground='red') #Main frame
-        # menu for buttons
+        self.root.title("Game of Life - Created by Fabio Melis - Have fun")
+        # Defining the main frame, left-side frame and right-side frame.
+        self.frame = tk.Frame(self.root, width=1000, height=1000, highlightbackground='red')
         self.menu = tk.Frame(self.frame, width=250, height=1000, highlightbackground='#595959', highlightthickness=10)
-        # space for pygame
         self.game_border = tk.Frame(self.frame, width=750, height=1000, highlightbackground='green', highlightthickness=10)
-
-        # Packing the windows
-        self.frame.pack(expand=True)
+        # Packing the windows.
+        self.frame.pack()
         self.frame.pack_propagate(0)
         self.menu.pack(side="left")
         self.menu.pack_propagate(0)
         self.game_border.pack()
 
-        # Buttons
-        self.button_start = tk.Button(self.menu, text="Start", height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.start_button)
-        self.button_stop = tk.Button(self.menu, text="Stop", height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.stop_button)
-        self.button_iteration = tk.Button(self.menu, text="Next iteration",  height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.create_next_gen)
-        self.button_random = tk.Button(self.menu, text="Random", height=5, width=20, fg="black", activeforeground="red",background="grey80", activebackground="grey80", command=self.random_grid)
-        self.button_reset = tk.Button(self.menu, text="Reset",  height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.reset_button)
-        self.button_quit = tk.Button(self.menu, text="Quit",  height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.quit_button)
-
-        # Labels
-        self.label_alive = tk.Label(self.menu, text=self.count_alive,  height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80")
-        self.label_dead = tk.Label(self.menu, text="Dead cells"+" :"+" 1000",  height=5 , width=20 , fg="black", activeforeground="red", background="grey80", activebackground="grey80")
-
-        # Sliders
-        self.slider_random = tk.Scale(self.menu, from_=0, to=100, orient="horizontal", command=self.slider_value)
-        self.slider_random.set(50)
-        #print(self.slider_random.get())
-        #self.get_random_value = self.slider_random.get()
-        #print(self.get_random_value)
-
-        # Packing the buttons
+        # Defining the buttons.
+        self.button_start = tk.Button(self.menu, text="Start", height=5, width=20, fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.start_button)
+        self.button_stop = tk.Button(self.menu, text="Stop", height=5, width=20, fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.stop_button)
+        self.button_iteration = tk.Button(self.menu, text="Next iteration", height=5, width=20, fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.create_next_gen)
+        self.button_random = tk.Button(self.menu, text="Random", height=5, width=20, fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.random_grid)
+        self.button_reset = tk.Button(self.menu, text="Reset", height=5, width=20, fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.reset_button)
+        self.button_quit = tk.Button(self.menu, text="Quit", height=5, width=20, fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.quit_button)
+        # Packing the buttons.
         self.button_start.pack()
         self.button_stop.pack()
         self.button_iteration.pack()
         self.button_random.pack()
         self.button_reset.pack()
         self.button_quit.pack()
-
-        # Packing the labels
-        self.label_alive.pack()
-        self.label_dead.pack()
-
-        # Packing the sliders
-        self.slider_random.pack()
-
-        # Placing the buttons
+        # Placing the buttons.
         self.button_start.place(x=40, y=50)
         self.button_stop.place(x=40, y=200)
         self.button_iteration.place(x=40, y=350)
@@ -101,10 +79,63 @@ class GameOfLife:
         self.button_reset.place(x=40, y=650)
         self.button_quit.place(x=40, y=800)
 
-        # Placing the slicers
+        # Defining the slider.
+        self.slider_random = tk.Scale(self.menu, from_=0, to=100, orient="horizontal", command=self.slider_value)
+        self.slider_random.set(50)
+        # Packing the slider.
+        self.slider_random.pack()
+        # Placing the slider.
         self.slider_random.place(x=62, y=590)
 
-        # This embeds the pygame window in the pygame frame.
+        # Defining a dropdown menu for the form and color.
+        """
+        self.options_figures = [
+            "circles",
+            "squares",
+            "surprise"
+        ]
+        self.var_figure = tk.StringVar(self.root)
+        self.dropdown_figure = tk.OptionMenu(self.menu, self.var_figure,
+                                             self.options_figures[0], self.options_figures[1],
+                                             self.options_figures[2])
+        self.var_figure.set(self.options_figures[0])
+        #self.var_color.trace("w", FUNCTIONNAME)
+        self.dropdown_figure.pack()
+
+        # Dropdown menu for the cell color
+        self.options_colors = [
+            "blue",
+            "red",
+            "white",
+            "green",
+            "yellow",
+            "purple",
+            "grey",
+            "pink"
+        ]
+        self.var_color = tk.StringVar(self.root)
+        self.dropdown_colors = tk.OptionMenu(self.menu, self.var_color,
+                                             self.options_colors[0], self.options_colors[1],
+                                             self.options_colors[2], self.options_colors[3],
+                                             self.options_colors[4], self.options_colors[5],
+                                             self.options_colors[6], self.options_colors[7])
+        self.var_color.set(self.options_colors[0])
+        #self.var_color.trace("w", FUNCTION NAME)
+        self.dropdown_colors.pack()
+        """
+
+        # Defining the labels that count the dead and living cells.
+        """
+        self.label_alive = tk.Label(self.menu, text="Living cells:"+" 1000", height=5, width=20, fg="black", background="grey80")
+        self.label_dead = tk.Label(self.menu, text="Dead cells"+" 1000", height=1, width=20, fg="black", background="grey80")
+        Packing the labels
+        self.label_alive.pack()
+        self.label_dead.pack()
+        self.label_alive.place(x=40, y=900)
+        self.label_alive.place(x=40, y=900)
+        """
+
+        # This embeds the pygame window in the tkinter frame.
         os.environ['SDL_WINDOWID'] = str(self.game_border.winfo_id())
         system = platform.system()
         if system == "Windows":
@@ -112,18 +143,22 @@ class GameOfLife:
         elif system == "Linux":
             os.environ['SDL_VIDEODRIVER'] = 'x11'
 
-        # Starting pygame
+        # Initializing pygame.
         pygame.init()
-        pygame.display.set_caption("Game of Life - Created by ")  # Gives a title to the window
-        self.screen = pygame.display.set_mode(GRID_SIZE)  # Create the window with the GRID_SIZE.
-
-        # Initialise the generations
+        self.screen = pygame.display.set_mode(GRID_SIZE)
+        # Initializing the generations.
         self.init_gen(current_generation, COLOR_DEAD)
+        # Defining a clock to set the FPS.
+        self.fps_clock = pygame.time.Clock()
+        # Setting variables for later use.
+        self.next_iteration = False
+        self.game_over = False
 
+    # Get the slider value to change the % of randomness.
     def slider_value(self, value):
         self.value = value
 
-    # Button functions
+    # Button functions.
     def start_button(self):
         self.next_iteration = True
     def stop_button(self):
@@ -140,52 +175,51 @@ class GameOfLife:
             for x in range(X_CELLS):
                 generation[x][y] = c
 
-    # Random grid based on the slider. Example: Slider at 20 --> 20% of the cells is activated randomly.
+    # Creates a random grid based on the slider value.
     def random_grid(self):
         self.next_iteration = False
         self.init_gen(next_generation, COLOR_DEAD)
-        #self.total_cells = X_CELLS * Y_CELLS
-        #print(self.total_cells)
-        self.percentage_zero = list(itertools.repeat(0,     (100 - self.slider_random.get())))
-        self.percentage_one = list(itertools.repeat(1,      (self.slider_random.get())))
-        #print(self.percentage_zero)
-        #print(self.percentage_one)
+        self.percentage_zero = list(itertools.repeat(0,
+                                                     (100 - self.slider_random.get())))
+        self.percentage_one = list(itertools.repeat(1,
+                                                    (self.slider_random.get())))
+        # print(self.percentage_zero)
+        # print(self.percentage_one)
         for row in range(X_CELLS):
             for col in range(Y_CELLS):
                 next_generation[row][col] = random.choice(self.percentage_zero + self.percentage_one)
                 print(next_generation[row][col])
 
-    # Drawing the cells, color black or blue at location x/y.
+    # Drawing the cells, color black or blue at location (x,y).
     def draw_cell(self, x, y, c):
         pos = (int(x * CELL_SIZE + CELL_SIZE / 2),
                int(y * CELL_SIZE + CELL_SIZE / 2))
         # pygame.draw.rect(screen, colors[c], pygame.Rect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE-1, CELL_SIZE-1))
         # pygame.draw.circle(screen, colors[c], pos, CELL_SIZE, CELL_SIZE) #Weird form, can also be used instead of rectangles
-        pygame.draw.circle(self.screen, colors[c], pos, 5,0)  # Use the last two arguments (radius, width) to change the look of the circles.
+        pygame.draw.circle(self.screen, colors[c], pos, 5, 0)
 
-    # Updating the cells.
+    # Updating the cells in the current generation.
     def update_gen(self):
         global current_generation
         for y in range(Y_CELLS):
             for x in range(X_CELLS):
                 c = next_generation[x][y]
                 self.draw_cell(x, y, c)
-        # Update current_generation
         current_generation = list(next_generation)
 
-    # Activate a living cell
+    # Activate a living cell.
     def activate_living_cell(self, x, y):
         global next_generation
         next_generation[x][y] = COLOR_ALIVE
 
-    # Deactivate a living cell
+    # Deactivate a living cell.
     def deactivate_living_cell(self, x, y):
         global next_generation
         next_generation[x][y] = COLOR_DEAD
 
-    # Function to check neighbor cell
+    # Function to check neighbor cells.
     def check_cells(self, x, y):
-        # Ignoring cells off the edge
+        # Check the edges.
         if (x < 0) or (y < 0): return 0
         if (x >= X_CELLS) or (y >= Y_CELLS): return 0
         if current_generation[x][y] == COLOR_ALIVE:
@@ -194,7 +228,7 @@ class GameOfLife:
             return 0
 
     def check_cell_neighbors(self, row_index, col_index):
-        # Get the number of alive cells surrounding the current cell
+        # Get the number of alive cells surrounding the current cell.
         num_alive_neighbors = 0
         num_alive_neighbors += self.check_cells(row_index - 1, col_index - 1)
         num_alive_neighbors += self.check_cells(row_index - 1, col_index)
@@ -206,7 +240,7 @@ class GameOfLife:
         num_alive_neighbors += self.check_cells(row_index + 1, col_index + 1)
         return num_alive_neighbors
 
-    # Rules
+    # Rules:
     # 1 Any live cell with fewer than two live neighbors dies, as if by underpopulation.
     # 2 Any live cell with two or three live neighbors lives on to the next generation.
     # 3 Any live cell with more than three live neighbors dies, as if by overpopulation.
@@ -214,71 +248,60 @@ class GameOfLife:
     def create_next_gen(self):
         for y in range(Y_CELLS):
             for x in range(X_CELLS):
-                # If cell is live, count neighboring live cells
-                n = self.check_cell_neighbors(x, y)  # number of neighbors
-                c = current_generation[x][y]  # current cell (either dead or alive).
-                if c == COLOR_ALIVE:  # If the cell is living:
-                    if (n < 2):  # Rule number 1, underpopulation
+                n = self.check_cell_neighbors(x, y)  # Number of neighbors.
+                c = current_generation[x][y]  # Current cell (either dead or alive).
+                if c == COLOR_ALIVE:
+                    if (n < 2):  # Rule number 1.
                         next_generation[x][y] = COLOR_DEAD
-                    elif (n > 3):  # Rule number 3, overpopulation
+                    elif (n > 3):  # Rule number 3.
                         next_generation[x][y] = COLOR_DEAD
-                    else:  # Rule number 3, 2 or 3 neighbors, staying alive.
+                    else:  # Rule number 2.
                         next_generation[x][y] = COLOR_ALIVE
-                else:  # if the cell is dead:
-                    if (n == 3):
-                        # Rule number 4: A dead cell with three living neighbors becomes alive.
+                else:
+                    if (n == 3):  # Rule number 4.
                         next_generation[x][y] = COLOR_ALIVE
 
-
-    def count_dead(self):
-        for row in range(X_CELLS):
-            for col in range(Y_CELLS):
-                self.number_dead = sum(next_generation[row][col] == 0)
-                return number_alive
-
-
-
-    def count_alive(self):
-        alive_cell_count = []
-        for y in range(Y_CELLS):
-            for x in range(X_CELLS):
-                alive_cell_count.append(current_generation[x][y] == COLOR_ALIVE)
-
-
-
-
-
+    # Defines button and mouse clicks.
     def handle_events(self):
         for event in pygame.event.get():
+            # Turns the mouse position into a position in the grid.
             posn = pygame.mouse.get_pos()
             x = int(posn[0] / CELL_SIZE)
             y = int(posn[1] / CELL_SIZE)
-            # print(x,y)
+            # Pressing quit --> quit the game.
             if event.type == pygame.QUIT:
-                self.game_over = True  # If pressing the quit button, it closes the window.
-            if event.type == pygame.MOUSEBUTTONDOWN:  # if pressing the mouse button, it gets the position. If the cell is dead, make it alive, if the cell is alive, make it dead.
-                if event.button == 1: #Left click is 1, right click is 3.
+                self.game_over = True
+            # Pressing the left mouse button to activate or deactivate a cell.
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
                     if next_generation[x][y] == COLOR_DEAD:
                         self.activate_living_cell(x, y)
                     else:
                         self.deactivate_living_cell(x, y)
+            # Keeping the right mouse button pressed activates drawing mode.
             if event.type == pygame.MOUSEMOTION and event.buttons[2]:
                 self.activate_living_cell(x, y)
 
-            if event.type == pygame.KEYDOWN:  # keydown --> quits when the button goes down. keyup --> quits when the button goes up again.
-                if event.unicode == 'q':  # Press q to quit.
+            # Define the keyboard key presses for q, space, a, s, r.
+            if event.type == pygame.KEYDOWN:
+                # Quit the game.
+                if event.unicode == 'q':
                     self.game_over = True
                     print("q")
-                elif event.key == pygame.K_SPACE:  # Space for the next iteration manually.
+                # Next iteration - manually.
+                elif event.key == pygame.K_SPACE:
                     self.create_next_gen()
                     print("keypress")
+                # Next iteration - automated.
                 elif event.unicode == 'a':  # a to automate the iterations.
                     self.next_iteration = True
                     print("a")
-                elif event.unicode == 's':  # s to stop the automated iterations.
+                # Stop the automated iterations.
+                elif event.unicode == 's':
                     self.next_iteration = False
                     print("s")
-                elif event.unicode == 'r':  # r to reset the grid.
+                # Empty the grid.
+                elif event.unicode == 'r':
                     self.next_iteration = False
                     self.init_gen(next_generation, COLOR_DEAD)
                     print("r")
@@ -286,19 +309,18 @@ class GameOfLife:
     # Runs the game loop
     def run(self):
         while not self.game_over:
-            # Set the frames per second.
             self.handle_events()
-            if self.next_iteration:  # if next iteration is true, the next gen is created according to the rules.
+            if self.next_iteration:
                 self.create_next_gen()
-            # Updating
             self.update_gen()
             pygame.display.flip()
-            self.FPSCLOCK.tick(fps_max)
+            self.fps_clock.tick(FPS_MAX)
             self.root.update()
 
 if __name__ == "__main__":
-    game = GameOfLife()
-    game.run()
+    GAME = GameOfLife()
+    GAME.run()
+
 
 
 
