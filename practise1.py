@@ -269,15 +269,15 @@ class GameOfLife:
             for x in range(X_CELLS):
                 c = next_generation[x][y]
                 self.draw_cell(x, y, c)
-        current_generation = list(next_generation)
+                current_generation[x][y] = next_generation[x][y]  # assign element by element
 
         # Activate a living cell.
     def activate_living_cell(self, x, y):
-        current_generation[x][y] = COLOR_ALIVE
+        next_generation[x][y] = COLOR_ALIVE
 
         # Deactivate a living cell.
     def deactivate_living_cell(self, x, y):
-        current_generation[x][y] = COLOR_DEAD
+        next_generation[x][y] = COLOR_DEAD
 
     # Function to check neighbor cells.
     def check_cells(self, x, y):
