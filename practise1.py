@@ -4,14 +4,15 @@
 # Increase the speed of the drawing
 #If slider = 100, all the cells are activated. This means = overpopulation, so everything should die. This does not happen. Fix this.
 #Explain that the qsa space buttons can be used as well.
-# Square or circles button. ANd color button.
+
 # Python ruies
 # add a dropdown file menu with an instruction button.
-# Create a package.
 # Limit all lines to 72 characters.
 # Neighbors 1 row/col further from the cell.
 # Create a package, so that other people can use it.
 # Explain the keyboard presses.
+# Iteration counter.
+# Packing not needed if placed.
 
 import tkinter as tk
 import itertools, os, platform, pygame, random
@@ -47,7 +48,7 @@ class GameOfLife:
         self.root = tk.Tk()
         self.root.title("Game of Life - Created by Fabio Melis - Have fun")
         # Defining the main frame, left-side frame and right-side frame.
-        self.frame = tk.Frame(self.root, width=1000, height=1000, highlightbackground='red')
+        self.frame = tk.Frame(self.root , width=1000, height=1000, highlightbackground='red')
         self.menu = tk.Frame(self.frame, width=250, height=1000, highlightbackground='#595959', highlightthickness=10)
         self.game_border = tk.Frame(self.frame, width=750, height=1000, highlightbackground='green', highlightthickness=10)
         # Packing the windows.
@@ -88,7 +89,6 @@ class GameOfLife:
         self.slider_random.place(x=62, y=590)
 
         # Defining a dropdown menu for the form and color.
-        """
         self.options_figures = [
             "circles",
             "squares",
@@ -100,7 +100,7 @@ class GameOfLife:
                                              self.options_figures[2])
         self.var_figure.set(self.options_figures[0])
         #self.var_color.trace("w", FUNCTIONNAME)
-        self.dropdown_figure.pack()
+        self.dropdown_figure.place(x=115, y=10)
 
         # Dropdown menu for the cell color
         self.options_colors = [
@@ -121,8 +121,7 @@ class GameOfLife:
                                              self.options_colors[6], self.options_colors[7])
         self.var_color.set(self.options_colors[0])
         #self.var_color.trace("w", FUNCTION NAME)
-        self.dropdown_colors.pack()
-        """
+        self.dropdown_colors.place(x=40, y=10)
 
         # Defining the labels that count the dead and living cells.
         """
@@ -153,6 +152,12 @@ class GameOfLife:
         # Setting variables for later use.
         self.next_iteration = False
         self.game_over = False
+
+    def options_shape(self, value):
+        return self.var_figure.get()
+
+    def options_color(self,value):
+        return self.var_color.get()
 
     # Get the slider value to change the % of randomness.
     def slider_value(self, value):
@@ -188,15 +193,74 @@ class GameOfLife:
         for row in range(X_CELLS):
             for col in range(Y_CELLS):
                 next_generation[row][col] = random.choice(self.percentage_zero + self.percentage_one)
-                print(next_generation[row][col])
+                # print(next_generation[row][col])
 
     # Drawing the cells, color black or blue at location (x,y).
     def draw_cell(self, x, y, c):
         pos = (int(x * CELL_SIZE + CELL_SIZE / 2),
                int(y * CELL_SIZE + CELL_SIZE / 2))
-        # pygame.draw.rect(screen, colors[c], pygame.Rect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE-1, CELL_SIZE-1))
-        # pygame.draw.circle(screen, colors[c], pos, CELL_SIZE, CELL_SIZE) #Weird form, can also be used instead of rectangles
-        pygame.draw.circle(self.screen, colors[c], pos, 5, 0)
+        if c == 1:
+            if self.options_shape(self) == "circles":
+                if self.options_color(self) == "blue":
+                    pygame.draw.circle(self.screen, (0, 128, 128), pos, 5, 0)
+                if self.options_color(self) == "red":
+                    pygame.draw.circle(self.screen, (255, 0, 0), pos, 5, 0)
+                if self.options_color(self) == "white":
+                    pygame.draw.circle(self.screen, (255, 255, 255), pos, 5, 0)
+                if self.options_color(self) == "green":
+                    pygame.draw.circle(self.screen, (0, 255, 0), pos, 5, 0)
+                if self.options_color(self) == "yellow":
+                    pygame.draw.circle(self.screen, (255, 255, 0), pos, 5, 0)
+                if self.options_color(self) == "purple":
+                    pygame.draw.circle(self.screen, (255, 0, 255), pos, 5, 0)
+                if self.options_color(self) == "grey":
+                    pygame.draw.circle(self.screen, (155, 155, 155), pos, 5, 0)
+                if self.options_color(self) == "pink":
+                    pygame.draw.circle(self.screen, (255, 75, 150), pos, 5, 0)
+
+            elif self.options_shape(self) == "squares":
+                if self.options_color(self) == "blue":
+                    pygame.draw.rect(self.screen, (0, 128, 128),
+                                     pygame.Rect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE - 1, CELL_SIZE - 1))
+                if self.options_color(self) == "red":
+                    pygame.draw.rect(self.screen, (255, 0, 0),
+                                     pygame.Rect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE - 1, CELL_SIZE - 1))
+                if self.options_color(self) == "white":
+                    pygame.draw.rect(self.screen, (255, 255, 255),
+                                     pygame.Rect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE - 1, CELL_SIZE - 1))
+                if self.options_color(self) == "green":
+                    pygame.draw.rect(self.screen, (0, 255, 0),
+                                     pygame.Rect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE - 1, CELL_SIZE - 1))
+                if self.options_color(self) == "yellow":
+                    pygame.draw.rect(self.screen, (255, 255, 0),
+                                     pygame.Rect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE - 1, CELL_SIZE - 1))
+                if self.options_color(self) == "purple":
+                    pygame.draw.rect(self.screen, (255, 0, 255),
+                                     pygame.Rect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE - 1, CELL_SIZE - 1))
+                if self.options_color(self) == "grey":
+                    pygame.draw.rect(self.screen, (155, 155, 155),
+                                     pygame.Rect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE - 1, CELL_SIZE - 1))
+                if self.options_color(self) == "pink":
+                    pygame.draw.rect(self.screen, (255, 75, 150),
+                                     pygame.Rect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE - 1, CELL_SIZE - 1))
+
+            elif self.options_shape(self) == "surprise":
+                if self.options_color(self) == "blue":
+                    pygame.draw.circle(self.screen, (0, 128, 128), pos, 5, 2)
+                if self.options_color(self) == "red":
+                    pygame.draw.circle(self.screen, (255, 0, 0), pos, 5, 2)
+                if self.options_color(self) == "white":
+                    pygame.draw.circle(self.screen, (255, 255, 255), pos, 5, 2)
+                if self.options_color(self) == "green":
+                    pygame.draw.circle(self.screen, (0, 255, 0), pos, 5, 2)
+                if self.options_color(self) == "yellow":
+                    pygame.draw.circle(self.screen, (255, 255, 0), pos, 5, 2)
+                if self.options_color(self) == "purple":
+                    pygame.draw.circle(self.screen, (255, 0, 255), pos, 5, 2)
+                if self.options_color(self) == "grey":
+                    pygame.draw.circle(self.screen, (155, 155, 155), pos, 5, 2)
+                if self.options_color(self) == "pink":
+                    pygame.draw.circle(self.screen, (255, 75, 150), pos, 5, 2)
 
     # Updating the cells in the current generation.
     def update_gen(self):
@@ -207,21 +271,21 @@ class GameOfLife:
                 self.draw_cell(x, y, c)
         current_generation = list(next_generation)
 
-    # Activate a living cell.
+        # Activate a living cell.
     def activate_living_cell(self, x, y):
-        global next_generation
-        next_generation[x][y] = COLOR_ALIVE
+        current_generation[x][y] = COLOR_ALIVE
 
-    # Deactivate a living cell.
+        # Deactivate a living cell.
     def deactivate_living_cell(self, x, y):
-        global next_generation
-        next_generation[x][y] = COLOR_DEAD
+        current_generation[x][y] = COLOR_DEAD
 
     # Function to check neighbor cells.
     def check_cells(self, x, y):
         # Check the edges.
-        if (x < 0) or (y < 0): return 0
-        if (x >= X_CELLS) or (y >= Y_CELLS): return 0
+        if (x < 0) or (y < 0):
+            return 0
+        if (x >= X_CELLS) or (y >= Y_CELLS):
+            return 0
         if current_generation[x][y] == COLOR_ALIVE:
             return 1
         else:
@@ -249,7 +313,7 @@ class GameOfLife:
         for y in range(Y_CELLS):
             for x in range(X_CELLS):
                 n = self.check_cell_neighbors(x, y)  # Number of neighbors.
-                c = current_generation[x][y]  # Current cell (either dead or alive).
+                c = current_generation[x][y]  # Current cell (either dead or alive).  #CHANGE C into another var.
                 if c == COLOR_ALIVE:
                     if (n < 2):  # Rule number 1.
                         next_generation[x][y] = COLOR_DEAD
@@ -257,9 +321,13 @@ class GameOfLife:
                         next_generation[x][y] = COLOR_DEAD
                     else:  # Rule number 2.
                         next_generation[x][y] = COLOR_ALIVE
-                else:
+                elif c == COLOR_DEAD:
                     if (n == 3):  # Rule number 4.
                         next_generation[x][y] = COLOR_ALIVE
+                    else:
+                        next_generation[x][y] = COLOR_DEAD
+
+#Problem: first counting, then next iteration.
 
     # Defines button and mouse clicks.
     def handle_events(self):
@@ -310,6 +378,7 @@ class GameOfLife:
     def run(self):
         while not self.game_over:
             self.handle_events()
+            self.screen.fill((0, 0, 0))
             if self.next_iteration:
                 self.create_next_gen()
             self.update_gen()
@@ -320,11 +389,3 @@ class GameOfLife:
 if __name__ == "__main__":
     GAME = GameOfLife()
     GAME.run()
-
-
-
-
-
-
-
-
