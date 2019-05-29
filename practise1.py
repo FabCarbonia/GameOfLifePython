@@ -58,6 +58,16 @@ class GameOfLife:
         self.menu.pack_propagate(0)
         self.game_border.pack()
 
+        # Define the location of the frame.
+        self.pixel_width = self.root.winfo_screenwidth()
+        self.pixel_height = self.root.winfo_screenheight()
+        # calculate x and y coordinates for the Tk root window
+        self.cor_x = (self.pixel_width  / 2) - (1000 / 2)  # tk.Frame width = 1000
+        self.cor_y = (self.pixel_height/ 2) - (1000 / 2)  # tk.Frame height = 1000
+        # Set the location.
+        self.root.geometry('%dx%d+%d+%d' % (1000, 1000, self.cor_x, self.cor_y))
+
+
         # Defining the buttons.
         self.button_start = tk.Button(self.menu, text="Start", height=5, width=20, fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.start_button)
         self.button_stop = tk.Button(self.menu, text="Stop", height=5, width=20, fg="black", activeforeground="red", background="grey80", activebackground="grey80", command=self.stop_button)
@@ -132,8 +142,6 @@ class GameOfLife:
         self.menu_bar.add_cascade(label="Click here for instructions", menu=self.dropdown_menu)
         self.root.config(menu=self.menu_bar)
 
-
-
         # Defining the labels that count the dead and living cells.
         """
         self.label_alive = tk.Label(self.menu, text="Living cells:"+" 1000", height=5, width=20, fg="black", background="grey80")
@@ -171,7 +179,12 @@ class GameOfLife:
                                                '\nThe on-screen buttons can be used to play the game. '
                                                '\nAlternatively, you can press q (Quit), space (Next iteration), a (Automated game), s (Stop the game) and r (Reset).',
                  background="LightCyan3").pack(padx=30, pady=30)  #padx=30, pady=30
-        tk.Button(self.instruction_window, text="Understood, let's play!", fg="black", background="LightCyan4", activebackground="LightCyan4", command=self.instruction_window.destroy).pack()
+
+        tk.Button(self.instruction_window, text="Understood, let's play!", background="LightCyan4", activebackground="LightCyan4", command=self.instruction_window.destroy).pack()
+        self.x_loc = self.root.winfo_x()
+        self.y_loc = self.root.winfo_y()
+        self.instruction_window.geometry("+%d+%d" % (self.x_loc + 295, self.y_loc + 450))
+
 
     def options_shape(self, value):
         return self.var_figure.get()
