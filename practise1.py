@@ -99,7 +99,7 @@ class GameOfLife:
                                              self.options_figures[0], self.options_figures[1],
                                              self.options_figures[2])
         self.var_figure.set(self.options_figures[0])
-        #self.var_color.trace("w", FUNCTIONNAME)
+
         self.dropdown_figure.place(x=115, y=10)
 
         # Dropdown menu for the cell color
@@ -122,6 +122,17 @@ class GameOfLife:
         self.var_color.set(self.options_colors[0])
         #self.var_color.trace("w", FUNCTION NAME)
         self.dropdown_colors.place(x=40, y=10)
+
+
+
+        # Defining the menu with the instructions
+        self.menu_bar = tk.Menu(self.root)
+        self.dropdown_menu = tk.Menu(self.menu_bar, tearoff=0) # No ugly line.
+        self.dropdown_menu.add_command(label="Instructions", command=self.create_window)
+        self.menu_bar.add_cascade(label="Click here for instructions", menu=self.dropdown_menu)
+        self.root.config(menu=self.menu_bar)
+
+
 
         # Defining the labels that count the dead and living cells.
         """
@@ -152,6 +163,15 @@ class GameOfLife:
         # Setting variables for later use.
         self.next_iteration = False
         self.game_over = False
+
+    def create_window(self):
+        self.instruction_window = tk.Toplevel(self.root, background="LightCyan3")
+        self.instruction_window.title("Instructions")
+        tk.Label(self.instruction_window, text='Welcome to this version of the Game of Life.'
+                                               '\nThe on-screen buttons can be used to play the game. '
+                                               '\nAlternatively, you can press q (Quit), space (Next iteration), a (Automated game), s (Stop the game) and r (Reset).',
+                 background="LightCyan3").pack(padx=30, pady=30)  #padx=30, pady=30
+        tk.Button(self.instruction_window, text="Understood, let's play!", fg="black", background="LightCyan4", activebackground="LightCyan4", command=self.instruction_window.destroy).pack()
 
     def options_shape(self, value):
         return self.var_figure.get()
@@ -342,10 +362,11 @@ class GameOfLife:
             # Pressing the left mouse button to activate or deactivate a cell.
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
-                    if next_generation[x][y] == COLOR_DEAD:
+                    if current_generation[x][y] == COLOR_DEAD:
                         self.activate_living_cell(x, y)
                     else:
                         self.deactivate_living_cell(x, y)
+                    self.update_gen() # If this is active, cell can be activated or deactivated when the game is running.
             # Keeping the right mouse button pressed activates drawing mode.
             if event.type == pygame.MOUSEMOTION and event.buttons[2]:
                 self.activate_living_cell(x, y)
@@ -380,8 +401,8 @@ class GameOfLife:
             self.handle_events()
             self.screen.fill((0, 0, 0))
             if self.next_iteration:
-                self.create_next_gen()
-            self.update_gen()
+                self.create_next_gen() # compute "next_generation" from "current_generation"
+            self.update_gen() # copy "current_generation" from "next_generation"
             pygame.display.flip()
             self.fps_clock.tick(FPS_MAX)
             self.root.update()

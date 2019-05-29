@@ -16,8 +16,8 @@
             <file pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/GameOfLife.py">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="-1634">
-                    <caret line="150" selection-start-line="150" selection-end-line="150" />
+                  <state relative-caret-position="343">
+                    <caret line="334" column="44" selection-start-line="334" selection-end-line="334" selection-end-column="44" />
                     <folding>
                       <element signature="e#200#209#0" expanded="true" />
                     </folding>
@@ -35,28 +35,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/testfile1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="284">
-              <caret line="34" column="31" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="31" />
+            <state relative-caret-position="641">
+              <caret line="374" column="36" selection-end-line="411" selection-end-column="14" />
               <folding>
-                <element signature="n#!!doc" />
-                <element signature="e#1443#1489#1" />
-                <element signature="e#5078#5253#0" />
-                <element signature="e#5942#6391#1" />
-                <element signature="e#9669#9913#0" />
-                <element signature="e#9981#10717#0" />
-                <element signature="e#10723#10731#0" />
-                <element signature="e#11137#11983#0" />
-                <element signature="e#11174#11983#0" />
-                <element signature="e#11215#11983#0" />
-                <element signature="e#11446#11749#0" />
-                <element signature="e#11808#11983#0" />
-                <element signature="e#13157#14053#0" />
-                <element signature="e#13235#13287#0" />
-                <element signature="e#13403#13463#0" />
-                <element signature="e#13606#13663#0" />
-                <element signature="e#13776#13834#0" />
-                <element signature="e#13932#14053#0" />
-                <element signature="e#14409#14443#0" />
+                <element signature="e#610#630#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -65,8 +47,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/practise1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="403">
-              <caret line="260" column="31" selection-start-line="260" selection-start-column="31" selection-end-line="260" selection-end-column="31" />
+            <state relative-caret-position="420">
+              <caret line="391" column="33" lean-forward="true" selection-start-line="391" selection-start-column="33" selection-end-line="391" selection-end-column="33" />
               <folding>
                 <element signature="e#655#675#0" expanded="true" />
               </folding>
@@ -146,8 +128,8 @@
         <option value="$PROJECT_DIR$/testfile.py" />
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/TestFile2.py" />
-        <option value="$PROJECT_DIR$/testfile1.py" />
         <option value="$PROJECT_DIR$/GameOfLife.py" />
+        <option value="$PROJECT_DIR$/testfile1.py" />
         <option value="$PROJECT_DIR$/practise1.py" />
       </list>
     </option>
@@ -180,7 +162,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.testfile1">
+  <component name="RunManager" selected="Python.practise1">
     <configuration name="GameOfLife" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="GameOfLifePython" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -288,8 +270,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.testfile1" />
         <item itemvalue="Python.practise1" />
+        <item itemvalue="Python.testfile1" />
         <item itemvalue="Python.TestFile2" />
         <item itemvalue="Python.GameOfLife" />
         <item itemvalue="Python.testfile" />
@@ -414,16 +396,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GameOfLife.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1634">
-          <caret line="150" selection-start-line="150" selection-end-line="150" />
-          <folding>
-            <element signature="e#200#209#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TestFile2.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="481">
@@ -437,38 +409,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/GameOfLife.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="343">
+          <caret line="334" column="44" selection-start-line="334" selection-end-line="334" selection-end-column="44" />
+          <folding>
+            <element signature="e#200#209#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/testfile1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="34" column="31" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="31" />
+        <state relative-caret-position="641">
+          <caret line="374" column="36" selection-end-line="411" selection-end-column="14" />
           <folding>
-            <element signature="n#!!doc" />
-            <element signature="e#1443#1489#1" />
-            <element signature="e#5078#5253#0" />
-            <element signature="e#5942#6391#1" />
-            <element signature="e#9669#9913#0" />
-            <element signature="e#9981#10717#0" />
-            <element signature="e#10723#10731#0" />
-            <element signature="e#11137#11983#0" />
-            <element signature="e#11174#11983#0" />
-            <element signature="e#11215#11983#0" />
-            <element signature="e#11446#11749#0" />
-            <element signature="e#11808#11983#0" />
-            <element signature="e#13157#14053#0" />
-            <element signature="e#13235#13287#0" />
-            <element signature="e#13403#13463#0" />
-            <element signature="e#13606#13663#0" />
-            <element signature="e#13776#13834#0" />
-            <element signature="e#13932#14053#0" />
-            <element signature="e#14409#14443#0" />
+            <element signature="e#610#630#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/practise1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="403">
-          <caret line="260" column="31" selection-start-line="260" selection-start-column="31" selection-end-line="260" selection-end-column="31" />
+        <state relative-caret-position="420">
+          <caret line="391" column="33" lean-forward="true" selection-start-line="391" selection-start-column="33" selection-end-line="391" selection-end-column="33" />
           <folding>
             <element signature="e#655#675#0" expanded="true" />
           </folding>
