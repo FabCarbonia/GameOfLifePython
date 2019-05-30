@@ -1,4 +1,4 @@
-#To do:
+# To do:
 # Create a package, so that other people can use it.
 
 
@@ -12,15 +12,28 @@ import tkinter as tk
 
 class GameOfLife:
     """
-    describe what the method does.
+    The code to run a Game of Life where the user can (de)activate,
+    draw and randomize cells.
+    Percentage randomness can be changed.
+    Cell color and figure can be changed.
     """
+
     def __init__(self):
+        """Initializing the tkinter windows.
+        Places the tkinter window in the middle of the screen.
+        Defines the buttons, slider and instruction screen.
+        Defines a dropdown button for cell color and figure.
+        Embeds the pygame window into the tkinter frame.
+        Defines the cell and grid properties.
+        Initializes two generations: current and next generation.
+        Initializes the pygame window and fps clock.
+        """
         # Initializing the interpreter and creating a root window and title.
         self.root = tk.Tk()
         self.root.title("Game of Life - Created by Fabio Melis - Have fun")
 
         # Defining the main frame, left-side frame and right-side frame.
-        self.frame = tk.Frame(self.root , width=1000,
+        self.frame = tk.Frame(self.root, width=1000,
                               height=1000, highlightbackground='red')
         self.menu_frame = tk.Frame(self.frame,
                                    width=250, height=1000,
@@ -41,8 +54,8 @@ class GameOfLife:
         self.pixel_height = self.root.winfo_screenheight()
 
         # Calculate x and y coordinates for the Tk root window
-        self.cor_x = (self.pixel_width  / 2) - (1000 / 2)  # tk.Frame width = 1000
-        self.cor_y = (self.pixel_height/ 2) - (1000 / 2)  # tk.Frame height = 1000
+        self.cor_x = (self.pixel_width / 2) - (1000 / 2)  # tk.Frame width = 1000
+        self.cor_y = (self.pixel_height / 2) - (1000 / 2)  # tk.Frame height = 1000
 
         # Set the location to the middle of the screen.
         self.root.geometry('%dx%d+%d+%d' % (1000, 1000, self.cor_x, self.cor_y))
@@ -50,23 +63,29 @@ class GameOfLife:
         # Defining the buttons in the GUI.
         self.button_start = tk.Button(self.menu_frame,
                                       text="Start", height=5, width=20, fg="black",
-                                      activeforeground="red", background="grey80", activebackground="grey80", command=self.start_button)
+                                      activeforeground="red", background="grey80", activebackground="grey80",
+                                      command=self.start_button)
 
         self.button_stop = tk.Button(self.menu_frame,
                                      text="Stop", height=5, width=20, fg="black",
-                                     activeforeground="red", background="grey80", activebackground="grey80", command=self.stop_button)
+                                     activeforeground="red", background="grey80", activebackground="grey80",
+                                     command=self.stop_button)
         self.button_iteration = tk.Button(self.menu_frame,
                                           text="Next iteration", height=5, width=20, fg="black",
-                                          activeforeground="red", background="grey80", activebackground="grey80", command=self.create_next_gen)
+                                          activeforeground="red", background="grey80", activebackground="grey80",
+                                          command=self.create_next_gen)
         self.button_random = tk.Button(self.menu_frame,
                                        text="Random", height=5, width=20, fg="black",
-                                       activeforeground="red", background="grey80", activebackground="grey80", command=self.random_grid)
+                                       activeforeground="red", background="grey80", activebackground="grey80",
+                                       command=self.random_grid)
         self.button_reset = tk.Button(self.menu_frame,
                                       text="Reset", height=5, width=20, fg="black",
-                                      activeforeground="red", background="grey80", activebackground="grey80", command=self.reset_button)
+                                      activeforeground="red", background="grey80", activebackground="grey80",
+                                      command=self.reset_button)
         self.button_quit = tk.Button(self.menu_frame,
                                      text="Quit", height=5, width=20, fg="black",
-                                     activeforeground="red", background="grey80", activebackground="grey80", command=self.quit_button)
+                                     activeforeground="red", background="grey80", activebackground="grey80",
+                                     command=self.quit_button)
 
         # Packing the buttons.
         self.button_start.pack()
@@ -149,10 +168,10 @@ class GameOfLife:
 
         # Defining two lists: current generation and next generation.
         self.current_generation = [[self.COLOR_DEAD
-                                   for col in range(self.Y_CELLS)]
+                                    for col in range(self.Y_CELLS)]
                                    for row in range(self.X_CELLS)]
         self.next_generation = [[self.COLOR_DEAD
-                                for col in range(self.Y_CELLS)]
+                                 for col in range(self.Y_CELLS)]
                                 for row in range(self.X_CELLS)]
 
         # Defining the max frames per second/speed of the game.
@@ -179,9 +198,10 @@ class GameOfLife:
         tk.Label(self.instruction_window, text='Welcome to this version of the Game of Life.'
                                                '\nThe on-screen buttons can be used to play the game. '
                                                '\nAlternatively, you can press q (Quit), space (Next iteration), a (Automated game), s (Stop the game) and r (Reset).',
-                 background="LightCyan3").pack(padx=30, pady=30)  #padx=30, pady=30
+                 background="LightCyan3").pack(padx=30, pady=30)  # padx=30, pady=30
 
-        tk.Button(self.instruction_window, text="Understood, let's play!", background="LightCyan4", activebackground="LightCyan4", command=self.instruction_window.destroy).pack()
+        tk.Button(self.instruction_window, text="Understood, let's play!", background="LightCyan4",
+                  activebackground="LightCyan4", command=self.instruction_window.destroy).pack()
         self.x_loc = self.root.winfo_x()
         self.y_loc = self.root.winfo_y()
         self.instruction_window.geometry("+%d+%d" % (self.x_loc + 295, self.y_loc + 450))
@@ -190,7 +210,7 @@ class GameOfLife:
         """Returns the cell-figure that the user chose."""
         return self.var_figure.get()
 
-    def options_color(self,value):
+    def options_color(self, value):
         """Returns the cell-color that the user chose. """
         return self.var_color.get()
 
@@ -458,6 +478,7 @@ class GameOfLife:
             pygame.display.flip()
             self.fps_clock.tick(self.FPS_MAX)
             self.root.update()
+
 
 if __name__ == "__main__":
     game = GameOfLife()
