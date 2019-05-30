@@ -1,21 +1,12 @@
 #To do:
-#Create a button that counts the living and dead cells.
-# SLider for the grid size.
-# Increase the speed of the drawing
-#If slider = 100, all the cells are activated. This means = overpopulation, so everything should die. This does not happen. Fix this.
-#Explain that the qsa space buttons can be used as well.
-
 # Python ruies
 # Limit all lines to 72 characters.
 # Create a package, so that other people can use it.
 
-# Iteration counter.
 # Packing not needed if placed.
 
 import tkinter as tk
 import itertools, os, platform, pygame, random
-
-
 
 class GameOfLife:
     """
