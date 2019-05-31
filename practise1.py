@@ -65,7 +65,6 @@ class GameOfLife:
                                       text="Start", height=5, width=20, fg="black",
                                       activeforeground="red", background="grey80", activebackground="grey80",
                                       command=self.start_button)
-
         self.button_stop = tk.Button(self.menu_frame,
                                      text="Stop", height=5, width=20, fg="black",
                                      activeforeground="red", background="grey80", activebackground="grey80",
@@ -196,8 +195,15 @@ class GameOfLife:
         self.instruction_window = tk.Toplevel(self.root, background="LightCyan3")
         self.instruction_window.title("Instructions")
         tk.Label(self.instruction_window, text='Welcome to this version of the Game of Life.'
-                                               '\nThe on-screen buttons can be used to play the game. '
-                                               '\nAlternatively, you can press q (Quit), space (Next iteration), a (Automated game), s (Stop the game) and r (Reset).',
+                                               '\nThe on-screen buttons can be used to play the game.'
+                                               '\nAlternatively, you can press:'
+                                               '\nspace for the next generation'
+                                               '\na to automate the game'
+                                               '\ns to stop the game'
+                                               '\nr to empty the grid'
+                                               '\nq to quit the game'
+                                               '\n\nThe slider below random can be used to change'
+                                               ' the percentage of randomly activated cells.',
                  background="LightCyan3").pack(padx=30, pady=30)  # padx=30, pady=30
 
         tk.Button(self.instruction_window, text="Understood, let's play!", background="LightCyan4",
