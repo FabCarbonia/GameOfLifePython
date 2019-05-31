@@ -26,7 +26,7 @@ class GameOfLife:
         self.screen = pygame.display.set_mode(grid_size)
         self.clear_screen()  # you clear the screen before it starts running
         pygame.display.flip() #Update the full display Surface to the screen
-        self.last_update_completed = 0
+
         #self.desired_milliseconds_between_updates = (1.0 / fps_max) * 1000
         self.active_grid = 0
         self.num_cols = int(width / cell_size)
@@ -70,7 +70,7 @@ class GameOfLife:
        for r in range(self.num_rows):
            for c in range(self.num_cols):
                 if value is None:
-                    cell_value = random.choice([0,1])
+                    cell_value = random.choice([0,0,0,0,0,0,0,0,0,1])
                 else:
                     cell_value = value
                 self.grids[grid][r][c] = cell_value
@@ -142,13 +142,12 @@ class GameOfLife:
         :return:
         """
         self.set_grid(0, self.inactive_grid())
-        for r in range(self.num_rows - 1):
-            for c in range(self.num_cols - 1):
+        for r in range(self.num_rows):
+            for c in range(self.num_cols):
                 next_gen_state = self.check_cell_neighbors(r, c)
                 # Set inactive grid future cell state
                 self.grids[self.inactive_grid()][r][c] = next_gen_state  # if it is zero, than is is 1. if it is 1, it is gonna be 0. Picks the offgrid.
         self.active_grid = self.inactive_grid()
-
 
         #inspect the current active generation
         # update the inactive grid to store next generation

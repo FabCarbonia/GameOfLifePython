@@ -481,4 +481,3 @@ class GameOfLife:
 
 GAME = GameOfLife()
 GAME.run()
- 
