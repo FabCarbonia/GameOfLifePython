@@ -1,5 +1,3 @@
-# To do:
-# Create a package, so that other people can use it.
 
 
 import itertools
@@ -221,7 +219,7 @@ class GameOfLife:
         return self.var_color.get()
 
     def slider_value(self, value):
-        """Returns the slider value to change the % of randomness."""
+        """Returns the slider value."""
         self.value = value
 
     def start_button(self):
@@ -241,14 +239,12 @@ class GameOfLife:
         """Button to quit the game."""
         self.game_over = True
 
-    # Initializing all the cells.
     def init_gen(self, generation, c):
         """Initializing the cells."""
         for row in range(self.Y_CELLS):
             for col in range(self.X_CELLS):
                 generation[col][row] = c
 
-    # Creates a random grid based on the slider value.
     def random_grid(self):
         """Randomly activates cells in the grid based on the slider value.
         The slider value equals the percentage of cells randomly activated.
@@ -266,7 +262,6 @@ class GameOfLife:
                 self.next_generation[col][row] = random.choice(self.percentage_zero
                                                                + self.percentage_one)
 
-    # Drawing the cells, color black or blue at location (x,y).
     def draw_cell(self, x, y, c):
         """Drawing the cell in a specific location.
         Three figure options: circles, squares and hollow circles.
@@ -466,7 +461,7 @@ class GameOfLife:
 
     def run(self):
         """Runs the game loop.
-        Handles all the events (mouse and keyboard presses)
+        Handles all the events (mouse and keyboard presses).
         Fills the screen with black cells,
         to prevent overlap when switching between figures and colors.
         Creates the next generation from the current generation.
@@ -484,7 +479,6 @@ class GameOfLife:
             pygame.display.flip()
             self.fps_clock.tick(self.FPS_MAX)
             self.root.update()
-
 
 if __name__ == "__main__":
     game = GameOfLife()
